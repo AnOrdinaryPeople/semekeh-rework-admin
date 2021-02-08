@@ -21,7 +21,9 @@
       </b-container>
     </header>
 
-    <nuxt-child />
+    <div class="h-app">
+      <nuxt-child />
+    </div>
   </div>
 </template>
 

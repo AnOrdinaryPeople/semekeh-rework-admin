@@ -42,5 +42,8 @@ export default Vue.extend({
             this.$auth.logout()
         },
     },
+    created() {
+        if (this.$auth.loggedIn) this.$store.dispatch('setAccess')
+    },
 })
 </script>

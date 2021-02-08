@@ -1,7 +1,7 @@
 <template>
   <b-container class="my-4 py-4">
     <b-row class="justify-content-center">
-      <b-col xs="12" sm="12" md="9" lg="5">
+      <b-col sm="12" md="9" lg="5">
         <b-card class="h-login" title="Login">
           <b-card-body>
             <formulate-form @submit="send()">
@@ -19,7 +19,7 @@
               />
               <recaptcha
                 ref="reeee"
-                class="mb-2"
+                class="mb-2 h-recap"
                 @verify="onVerify"
                 :sitekey="key"
                 :loadRecaptchaScript="true"
@@ -37,7 +37,10 @@
 
 <style scoped>
 .h-login {
-    min-height: 480px;
+    min-height: 460px;
+}
+.h-recap {
+    min-height: 80px;
 }
 </style>
 
@@ -67,6 +70,11 @@ export default Vue.extend({
                     // _this.$refs.reeee.reset()
                     // this.clicked = false
                     await this.$auth.setUserToken(data.token)
+
+                    this.$store.dispatch(
+                        'setAccess',
+                        JSON.parse(atob(data.token.split('.')[1])).access
+                    )
 
                     this.$router.push('/admin')
                 })

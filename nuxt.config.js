@@ -31,6 +31,7 @@ export default {
     '~plugins/showdown.ts',
     '~plugins/simplemde.ts',
     '~plugins/recaptcha.ts',
+    '~plugins/icon.ts',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

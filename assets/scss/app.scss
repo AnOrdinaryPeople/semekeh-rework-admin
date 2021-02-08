@@ -1,3 +1,8 @@
+$body-bg: #f8fafc;
+
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
 @import '~bootstrap/scss/bootstrap';
 @import '~@braid/vue-formulate/themes/snow/snow.scss';
 @import '~simplemde/dist/simplemde.min';
