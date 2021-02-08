@@ -2,7 +2,7 @@
   <b-container class="my-4 py-4">
     <b-row class="justify-content-center">
       <b-col xs="12" sm="12" md="9" lg="5">
-        <b-card title="Login">
+        <b-card class="h-login" title="Login">
           <b-card-body>
             <formulate-form @submit="send()">
               <formulate-input
@@ -34,6 +34,12 @@
     </b-row>
   </b-container>
 </template>
+
+<style scoped>
+.h-login {
+    min-height: 480px;
+}
+</style>
 
 <script lang="ts">
 import Vue from 'vue'

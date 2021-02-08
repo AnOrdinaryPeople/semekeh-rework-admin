@@ -17,7 +17,7 @@
     </transition>
 
     <div class="m-2 px-2 text-right">
-      <strong>Copyright &copy; {{ new Date().getFullYear() + ' - ' + appName }}</strong>
+      <strong>Copyright &copy; {{ new Date().getFullYear() + ' &mdash; ' + appName }}</strong>
       <small class="text-muted">
         Made with &#x2764; by
         <strong>TIM ICT SMK BPI</strong>
