@@ -1,39 +1,45 @@
 <template>
-  <div v-if="access.length" class="list-style-none">
-    <div v-for="(i, k) in menu" :key="k">
-      <div v-if="i.children && checkChildPerm(i.children)">
-        <b-nav-item v-b-toggle="'app-sidebar-' + k">
+  <div v-if="Object.keys(access).length > 0">
+    <div v-for="(i, k) in menu" :key="k" class="list-style-none">
+      <li v-if="i.children && checkChildPerm(i.children)" class="nav-item">
+        <a class="nav-link" href="#" v-b-toggle="'app-sidebar-' + k" @click.prevent>
           {{ i.name }}
-          <span class="float-right">
+          <span class="float-right side-icon" :class="toggle[k] ? 'rotate-180' : ''">
             <fa icon="chevron-down" />
           </span>
-        </b-nav-item>
-        <b-collapse :id="'app-sidebar-' + k" class="pl-4">
-          <div v-for="(j, kk) in i.children" :key="kk">
-            <b-nav-item v-if="checkPerm(j.name)" :to="'/admin' + i.link + j.link">
-              <fa v-if="j.icon" class="mr-1" :icon="j.icon" />
-              {{ j.name }}
-            </b-nav-item>
-          </div>
+        </a>
+
+        <b-collapse :id="'app-sidebar-' + k" v-model="toggle[k]">
+          <ul class="list-style-none">
+            <li
+              v-for="(j, kk) in i.children"
+              :key="kk"
+              :class="checkPerm(j.name) ? 'nav-item' : 'd-none'"
+            >
+              <nuxt-link
+                v-if="checkPerm(j.name)"
+                class="nav-link"
+                :to="'/admin' + i.link + j.link"
+              >{{ j.name }}</nuxt-link>
+            </li>
+          </ul>
         </b-collapse>
-      </div>
-      <div v-else>
-        <b-nav-item v-if="checkPerm(i.name)" :to="'/admin' + i.link">
-          <fa v-if="i.icon" class="mr-1" :icon="i.icon" />
-          {{ i.name }}
-        </b-nav-item>
-      </div>
+      </li>
+      <li v-else-if="checkPerm(i.name)" class="nav-item">
+        <nuxt-link class="nav-link" :to="'/admin' + i.link">{{ i.name }}</nuxt-link>
+      </li>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import { mapGetters } from 'vuex'
 
 export default Vue.extend({
-    data: () => ({
-        menu: [
-            { name: 'Homepage', link: '/homepage' },
+    data: () => {
+        const menu = [
+            { name: 'Homepage', link: '' },
             {
                 name: 'Profile',
                 link: '/profile',
@@ -64,8 +70,13 @@ export default Vue.extend({
                 ],
             },
             { name: 'Audits', link: '/audits' },
-        ],
-    }),
+        ]
+
+        return {
+            menu,
+            toggle: menu.map(() => false),
+        }
+    },
     methods: {
         toKebab(str: string): string {
             return str.replace(/\s+/g, '-').toLowerCase()
@@ -87,7 +98,7 @@ export default Vue.extend({
             for (let i in arr) {
                 a = arr[i].name
                     ? Object.keys(this.access).filter((f: any) =>
-                          f.includes(arr[i].name)
+                          f.includes(this.toKebab(arr[i].name))
                       )
                     : []
 
@@ -98,9 +109,7 @@ export default Vue.extend({
         },
     },
     computed: {
-        access(): any {
-            return this.$auth.user?.access ?? []
-        },
+        ...mapGetters(['access']),
     },
 })
 </script>

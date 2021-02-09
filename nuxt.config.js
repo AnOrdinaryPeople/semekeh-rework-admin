@@ -1,17 +1,25 @@
+const env = {
+  app: process.env.NODE_ENV || 'production',
+  name: process.env.MIX_APP_NAME || 'SMK BPI',
+  api: process.env.MIX_APP_URL || 'http://localhost:8069',
+  fe: process.env.MIX_APP_URL_FE || 'http://localhost:3000',
+  recapKey: process.env.MIX_RECAPTCHA_SITE_KEY,
+}
+
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
   env: {
-    appName: process.env.MIX_APP_NAME,
-    appURL: process.env.MIX_APP_URL,
-    key: process.env.MIX_RECAPTCHA_SITE_KEY,
-    appEnv: process.env.NODE_ENV
+    appName: env.name,
+    appURL: env.api,
+    key: env.recapKey,
+    appEnv: env.app
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: process.env.MIX_APP_NAME,
+    title: env.name,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -27,15 +35,17 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~plugins/helper.ts',
-    '~plugins/formulate',
     '~plugins/showdown.ts',
     '~plugins/simplemde.ts',
+    '~plugins/formulate',
     '~plugins/recaptcha.ts',
     '~plugins/icon.ts',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
+
+  ignore: ['~components/InputMark.vue'],
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -57,14 +67,26 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: process.env.MIX_APP_URL,
+    baseURL: env.api,
     proxy: true
   },
 
   proxy: {
     '/laravel': {
-      target: process.env.MIX_APP_URL,
+      target: env.api,
       pathRewrite: { '^/laravel': '/' }
+    }
+  },
+
+  publicRuntimeConfig: {
+    axios: {
+      browserBaseURL: env.api
+    }
+  },
+
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: env.api
     }
   },
 
@@ -77,7 +99,7 @@ export default {
     strategies: {
       local: {
         provider: 'laravel/jwt',
-        url: process.env.MIX_APP_URL
+        url: env.api
       }
     }
   },
@@ -90,6 +112,10 @@ export default {
   pwa: {
     manifest: {
       lang: 'en',
+      name: env.name,
+      short_name: env.name,
+      description: 'Bermartabat, Berkualitas, dan Tepercaya',
+      background_color: '#f8fafc'
     },
   },
 

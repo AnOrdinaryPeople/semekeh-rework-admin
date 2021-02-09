@@ -3,6 +3,14 @@ $body-bg: #f8fafc;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
+$bpiBlue: #022c43;
+$bpiYellow: #ffd700;
+
+$theme-colors: (
+    bpi-blue: $bpiBlue,
+    bpi-yellow: $bpiYellow,
+) !default;
+
 @import '~bootstrap/scss/bootstrap';
 @import '~@braid/vue-formulate/themes/snow/snow.scss';
 @import '~simplemde/dist/simplemde.min';

@@ -4,6 +4,9 @@
 
 import Vue from 'vue'
 import VueFormulate from '@braid/vue-formulate'
+import InputMark from '~/components/InputMark'
+
+Vue.component('input-mark', InputMark)
 
 Vue.use(VueFormulate, {
     classes: {

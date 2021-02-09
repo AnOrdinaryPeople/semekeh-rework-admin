@@ -48,7 +48,8 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-    auth: 'guest',
+    middleware: 'guest',
+    // auth: 'guest',
     data: () => ({
         form: {
             email: '',

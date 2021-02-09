@@ -6,7 +6,7 @@
       </b-col>
       <b-col cols="9">
         <div class="float-right">
-          <b-input-group prepend="Display" append="data">
+          <b-input-group prepend="Show" append="data">
             <b-form-select v-model="perPage" :options="opt" />
           </b-input-group>
         </div>
@@ -42,7 +42,7 @@
       <template v-if="checkAccess" #cell(action)="data">
         <a
           v-if="access[`${manual ? type : `homepage-${type}`}.show`] && show"
-          class="btn btn-teal btn-sm"
+          class="btn btn-info btn-sm"
           href="#"
           v-b-tooltip.hover
           title="Detail"

@@ -2,5 +2,25 @@
 .fade-enter, .fade-leave-to{ opacity: 0 }
 
 .h-app{
-    min-height: 70vh;
+    min-height: 60vh;
+}
+
+.uppercase{
+    text-transform: uppercase;
+}
+
+.list-style-none{
+    list-style: none;
+}
+
+.side-icon{
+    transition: all ease .3s;
+}
+
+.rotate-180{
+    transform: rotate(180deg);
+}
+
+.formulate-input .formulate-input-element {
+    max-width: none !important;
 }

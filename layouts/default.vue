@@ -1,5 +1,7 @@
 <template>
   <div>
+    <app-nav v-if="$auth.loggedIn" />
+
     <b-sidebar v-if="$auth.loggedIn" id="app-sidebar" backdrop right>
       <app-sidebar />
 
@@ -13,7 +15,7 @@
     </b-sidebar>
 
     <transition name="fade" mode="out-in">
-      <Nuxt />
+      <Nuxt :class="$auth.loggedIn ? 'mt-5 pt-3' : ''" />
     </transition>
 
     <div class="m-2 px-2 text-right">
@@ -29,10 +31,12 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import Navbar from './Navbar.vue'
 import Sidebar from './Sidebar.vue'
 
 export default Vue.extend({
     components: {
+        appNav: Navbar,
         appSidebar: Sidebar,
     },
     methods: {

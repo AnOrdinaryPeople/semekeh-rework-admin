@@ -1,13 +1,12 @@
 <template>
-  <div v-if="access[from + '.create']" class="mb-4">
+  <div v-if="access[accessName + '.create']" class="mb-4">
     <b-btn
       class="mb-4"
       variant="primary"
       v-b-toggle="type + '-collapse'"
       @click="clicked = !clicked"
     >
-      <fa :icon="clicked ? 'chevron-up' : 'chevron-down'" />
-      {{ $t("create") }}
+      <fa class="side-icon" :class="clicked ? 'rotate-180' : ''" icon="chevron-down" />&nbsp;Create
     </b-btn>
 
     <b-collapse :id="type + '-collapse'">
@@ -26,7 +25,7 @@ export default Vue.extend({
             required: true,
             type: String,
         },
-        from: {
+        accessName: {
             required: true,
             type: String,
         },
