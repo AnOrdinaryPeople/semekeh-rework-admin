@@ -37,7 +37,7 @@
       </template>
       <template #cell(icon)="data">
         <fa :icon="['fab', data.item.icon]" />
-        <span class="pl-2">{{ ' ' + data.item.icon }}</span>
+        <span class="pl-2">{{ '&nbsp;' + data.item.icon }}</span>
       </template>
       <template v-if="checkAccess" #cell(action)="data">
         <a

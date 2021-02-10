@@ -844,7 +844,7 @@ export default Vue.extend({
                 .post(`/admin/homepage/${type}/publish/${id}`)
                 .then((r) => {
                     this.refreshTable(type)
-                    ;(this as any).alert(r.data.message, {
+                    ;(this as any).toast(r.data.message, {
                         title: 'Success',
                         variant: 'success',
                     })
