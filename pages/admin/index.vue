@@ -95,7 +95,7 @@
       </create>
 
       <data-table
-        type="homepage-homepage-video"
+        type="homepage-video"
         :table="video.table"
         :show="show"
         :del="del"
@@ -248,13 +248,7 @@
         </formulate-form>
       </create>
 
-      <data-table
-        type="homepage-homepage-homepage-alumni"
-        :table="alumni.table"
-        :show="show"
-        :edit="edit"
-        :del="del"
-      >
+      <data-table type="homepage-alumni" :table="alumni.table" :show="show" :edit="edit" :del="del">
         <template #default="data">
           <b-btn
             v-if="access['homepage-alumni.update']"
@@ -312,6 +306,44 @@
         :edit="edit"
         :del="del"
       />
+    </card>
+
+    <card access-name="homepage-social-media" title="Social Media">
+      <create access-name="homepage-social-media">
+        <formulate-form name="social" @submit="send('social')">
+          <b-row class="mb-2">
+            <b-col sm="12" md="6" lg="6">
+              <formulate-input
+                type="text"
+                v-model="social.form.icon"
+                label="Icon"
+                validation="required"
+              />
+              <span>
+                <a
+                  href="https://fontawesome.com/icons?d=gallery&s=brands&m=free"
+                  target="_blank"
+                >Available icons</a>
+              </span>
+            </b-col>
+            <b-col sm="12" md="6" lg="6">
+              <formulate-input
+                type="text"
+                v-model="social.form.link"
+                label="Link"
+                validation="required|regex_url"
+                :validation-rules="{regex_url: ({ value }) => new RegExp(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi).test(value)}"
+                :validation-messages="{regex_url: 'The link format is invalid'}"
+              />
+            </b-col>
+          </b-row>
+          <formulate-input label="Submit" type="submit" :disabled="social.clicked">
+            <b-spinner v-if="social.clicked" variant="primary" small />
+          </formulate-input>
+        </formulate-form>
+      </create>
+
+      <data-table type="homepage-social-media" :table="social.table" :edit="edit" :del="del" />
     </card>
   </div>
 </template>
