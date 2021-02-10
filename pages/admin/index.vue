@@ -345,6 +345,46 @@
 
       <data-table type="homepage-social-media" :table="social.table" :edit="edit" :del="del" />
     </card>
+
+    <card access-name="homepage-footer" title="Footer">
+      <create access-name="homepage-footer">
+        <formulate-form name="footer" @submit="send('footer')">
+          <b-row class="mb-2">
+            <b-col sm="12" md="6" lg="6">
+              <formulate-input
+                type="text"
+                v-model="footer.form.key"
+                label="Name"
+                validation="required"
+              />
+            </b-col>
+            <b-col sm="12" md="6" lg="6">
+              <formulate-input
+                type="text"
+                v-model="footer.form.value"
+                label="Value"
+                validation="required"
+              />
+            </b-col>
+          </b-row>
+          <formulate-input label="Submit" type="submit" :disabled="footer.clicked">
+            <b-spinner v-if="footer.clicked" variant="primary" small />
+          </formulate-input>
+        </formulate-form>
+      </create>
+
+      <data-table type="homepage-footer" :table="footer.table" :edit="edit" :del="del" />
+    </card>
+
+    <b-modal id="homepage-modal-show" title="Detail" hide-footer></b-modal>
+    <b-modal id="homepage-modal-edit" title="Edit" size="lg" hide-footer></b-modal>
+    <b-modal
+      id="homepage-modal-del"
+      title="Delete"
+      header-bg-variant="danger"
+      header-text-variant="light"
+      hide-footer
+    ></b-modal>
   </div>
 </template>
 
