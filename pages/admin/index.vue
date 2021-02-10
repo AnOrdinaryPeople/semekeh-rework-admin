@@ -1,5 +1,7 @@
 <template>
   <div>
+    <!-- CAROUSEL SECTION -->
+
     <card access-name="homepage-carousel" title="Carousel">
       <create access-name="homepage-carousel">
         <formulate-form name="carousel" @submit="send('carousel')">
@@ -51,6 +53,8 @@
 
       <data-table type="homepage-carousel" :table="carousel.table" :edit="edit" :del="del" />
     </card>
+
+    <!-- VIDEO SECTION -->
 
     <card
       access-name="homepage-video"
@@ -116,6 +120,8 @@
       </data-table>
     </card>
 
+    <!-- ABOUT SECTION -->
+
     <card access-name="homepage-about">
       <div v-if="access['homepage-about.update'] && about.content">
         <b-card-title>
@@ -164,6 +170,8 @@
       </div>
     </card>
 
+    <!-- TITLE NEWS AND PRESTATION SECTION -->
+
     <b-card class="my-4">
       <b-row>
         <b-col cols="6">
@@ -196,6 +204,8 @@
         </b-col>
       </b-row>
     </b-card>
+
+    <!-- ALUMNI SECTION -->
 
     <card
       access-name="homepage-alumni"
@@ -264,6 +274,8 @@
       </data-table>
     </card>
 
+    <!-- COMPANY SECTION -->
+
     <card
       access-name="homepage-company"
       :title="cardTitle(5, 'Company')"
@@ -308,6 +320,8 @@
       />
     </card>
 
+    <!-- SOCIAL MEDIA SECTION -->
+
     <card access-name="homepage-social-media" title="Social Media">
       <create access-name="homepage-social-media">
         <formulate-form name="social" @submit="send('social')">
@@ -346,6 +360,8 @@
       <data-table type="homepage-social-media" :table="social.table" :edit="edit" :del="del" />
     </card>
 
+    <!-- FOOTER SECTION -->
+
     <card access-name="homepage-footer" title="Footer">
       <create access-name="homepage-footer">
         <formulate-form name="footer" @submit="send('footer')">
@@ -376,8 +392,61 @@
       <data-table type="homepage-footer" :table="footer.table" :edit="edit" :del="del" />
     </card>
 
-    <b-modal id="homepage-modal-show" title="Detail" hide-footer></b-modal>
+    <!-- DETAIL MODAL -->
+
+    <b-modal id="homepage-modal-show" title="Detail" hide-footer>
+      <div v-if="modalType === 'video'">
+        <b-row>
+          <b-col cols="6">
+            <a :href="sauce('storage/' + modalShow.thumbnail)" target="_blank">Thumbnail</a>
+          </b-col>
+          <b-col cols="6">
+            <a :href="sauce('storage/' + modalShow.video)" target="_blank">Video</a>
+          </b-col>
+        </b-row>
+        <b-embed controls type="video" :poster="sauce('storage/' + modalShow.thumbnail)">
+          <source :src="sauce('storage/' + modalShow.video)" />
+        </b-embed>
+        <div class="mt-2">
+          <strong :class="`text-${modalShow.is_publish ? 'success' : 'danger'}`">Status</strong>
+          <p>{{ `This video is ${modalShow.is_publish ? 'published' : 'not published'}` }}</p>
+        </div>
+      </div>
+      <div v-else-if="modalType === 'alumni'">
+        <b-row class="mb-2">
+          <b-col cols="6">
+            <div class="mb-2">
+              <strong>Name</strong>
+              <p>{{ modalShow.name }}</p>
+            </div>
+            <strong>Company</strong>
+            <p>{{ modalShow.company }}</p>
+          </b-col>
+          <b-col cols="6">
+            <strong :class="`text-${modalShow.is_publish ? 'success' : 'danger'}`">Status</strong>
+            <p>{{ `This alumni is ${modalShow.is_publish ? 'published' : 'not published'}` }}</p>
+          </b-col>
+        </b-row>
+        <strong>Content</strong>
+        <p>{{ modalShow.content }}</p>
+        <b-img fluid :src="sauce('storage/' + modalShow.url)" />
+      </div>
+      <div v-else-if="modalType === 'company'">
+        <div class="form-group">
+          <a :href="modalShow.link" target="_blank">{{ modalShow.link }}</a>
+        </div>
+        <div class="form-group">
+          <b-img fluid :src="sauce('storage/' + modalShow.url)" />
+        </div>
+      </div>
+    </b-modal>
+
+    <!-- EDIT MODAL -->
+
     <b-modal id="homepage-modal-edit" title="Edit" size="lg" hide-footer></b-modal>
+
+    <!-- DELETE MODAL -->
+
     <b-modal
       id="homepage-modal-del"
       title="Delete"
@@ -457,7 +526,7 @@ export default Vue.extend({
                 }
             ),
             section: [],
-            typeModal: '',
+            modalType: '',
             modalEdit: {},
             modalShow: {},
             aboutImg: null,
@@ -479,6 +548,11 @@ export default Vue.extend({
     },
     methods: {
         send(str: string) {},
+        show(type: string, key: number) {
+            this.setModal(type, key, 'show')
+            this.modalType = type.replace(/homepage-/g, '')
+            ;(this as any).$bvModal.show('homepage-modal-show')
+        },
         edit(type: string, key: any) {
             console.log('---- EDIT', type, key)
         },
@@ -537,11 +611,6 @@ export default Vue.extend({
             }
 
             return str
-        },
-        show(type: string, key: number) {
-            this.setModal(type, key, 'show')
-            this.typeModal = type
-            ;(this as any).$bvModal.show('homepage-modal-show')
         },
         setModal(type: string, key: number, from = '') {
             const _this = (this as any).modalEdit
