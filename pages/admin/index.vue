@@ -52,21 +52,12 @@
       <data-table type="carousel" :table="carousel.table" :edit="edit" :del="del" />
     </card>
 
-    <card access-name="homepage-video">
-      <b-card-title>
-        <b-btn
-          v-if="access['homepage-video.update']"
-          variant="info"
-          title="Edit"
-          v-b-tooltip.hover
-          size="sm"
-          @click="edit('section', section[0])"
-        >
-          <fa icon="pencil-alt" />
-        </b-btn>
-        &nbsp;{{ cardTitle(0, 'Video') }}
-      </b-card-title>
-
+    <card
+      access-name="homepage-video"
+      :title="cardTitle(0, 'Video')"
+      :h-data="section[0]"
+      @h-edit="edit"
+    >
       <create access-name="homepage-video" type="video">
         <formulate-form name="video" @submit="send('video')">
           <b-row class="form-group">
@@ -107,7 +98,7 @@
         <template #default="data">
           <b-btn
             v-if="access['homepage-video.update']"
-            variant="warning"
+            variant="success"
             size="sm"
             @click="videoPublish(data.cell.id)"
             v-b-tooltip.hover
@@ -165,6 +156,106 @@
           </b-col>
         </b-row>
       </div>
+    </card>
+
+    <b-card class="my-4">
+      <b-row>
+        <b-col cols="6">
+          <b-card-title>
+            <b-btn
+              variant="info"
+              title="Edit"
+              v-b-tooltip.hover
+              size="sm"
+              @click="edit('section', section[2])"
+            >
+              <fa icon="pencil-alt" />
+            </b-btn>
+            &nbsp;{{ cardTitle(2, 'News') }}
+          </b-card-title>
+        </b-col>
+        <b-col cols="6">
+          <b-card-title>
+            <b-btn
+              variant="info"
+              title="Edit"
+              v-b-tooltip.hover
+              size="sm"
+              @click="edit('section', section[3])"
+            >
+              <fa icon="pencil-alt" />
+            </b-btn>
+            &nbsp;{{ cardTitle(3, 'Prestation') }}
+          </b-card-title>
+        </b-col>
+      </b-row>
+    </b-card>
+
+    <card
+      access-name="homepage-alumni"
+      :title="cardTitle(4, 'Alumni')"
+      :h-data="section[4]"
+      @h-edit="edit"
+    >
+      <create access-name="homepage-alumni" type="alumni">
+        <formulate-form name="alumni" @submit="send('alumni')">
+          <b-row>
+            <b-col sm="12" md="6" lg="6">
+              <formulate-input
+                type="text"
+                v-model="alumni.form.name"
+                label="Name"
+                validation="required"
+              />
+            </b-col>
+            <b-col sm="12" md="6" lg="6">
+              <formulate-input
+                type="text"
+                v-model="alumni.form.company"
+                label="Company"
+                validation="required"
+              />
+            </b-col>
+          </b-row>
+          <b-row class="mt-2">
+            <b-col sm="12" md="6" lg="6">
+              <formulate-input
+                type="textarea"
+                v-model="alumni.form.content"
+                label="Content"
+                validation="required"
+              />
+            </b-col>
+            <b-col sm="12" md="6" lg="6">
+              <formulate-input
+                type="image"
+                v-model="alumni.form.url"
+                label="Image"
+                validation="required|mime:image/jpg,image/jpeg,image/png,image/webp"
+                accept="image/jpg, image/jpeg, image/png, image/webp"
+              />
+            </b-col>
+          </b-row>
+          <formulate-input label="Submit" type="submit" :disabled="alumni.clicked">
+            <b-spinner v-if="alumni.clicked" variant="primary" small />
+          </formulate-input>
+        </formulate-form>
+      </create>
+
+      <data-table type="alumni" :table="alumni.table" :show="show" :edit="edit" :del="del">
+        <template #default="data">
+          <b-btn
+            v-if="access['homepage-alumni.update']"
+            variant="success"
+            size="sm"
+            @click="videoPublish(data.cell.id, 'alumni')"
+            v-b-tooltip.hover
+            :title="`This alumni is ${data.cell.is_publish ? 'published' : 'not published'}`"
+          >
+            <fa :icon="data.cell.is_publish ? 'toggle-on' : 'toggle-off'" />
+          </b-btn>
+        </template>
+      </data-table>
     </card>
   </div>
 </template>
@@ -260,8 +351,12 @@ export default Vue.extend({
     },
     methods: {
         send(str: string) {},
-        edit(type: string, key: number) {},
-        del(type: string, key: number) {},
+        edit(type: string, key: any) {
+            console.log('---- EDIT', type, key)
+        },
+        del(type: string, key: any) {
+            console.log('---- DELETE', type, key)
+        },
         reqTable(type: string) {
             return this.$axios.get('/admin/homepage/' + type)
         },

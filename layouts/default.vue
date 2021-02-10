@@ -18,7 +18,7 @@
       <Nuxt :class="$auth.loggedIn ? 'mt-5 pt-3' : ''" />
     </transition>
 
-    <div class="m-2 px-2 text-right">
+    <div class="mx-2 my-4 px-2 text-right">
       <strong>Copyright &copy; {{ new Date().getFullYear() + ' &mdash; ' + appName }}</strong>
       <small class="text-muted">
         Made with &#x2764; by

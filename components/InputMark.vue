@@ -13,15 +13,15 @@
 
     <b-card-body>
       <div v-if="active === 0">
+        <vue-simplemde v-model="context.model" :configs="config" />
+      </div>
+      <div v-else>
         <div v-if="context.model !== ''">
           <markdown :content="context.model" />
         </div>
         <div v-else>
           <h4 class="text-center text-secondary">Input the markdown to check the result</h4>
         </div>
-      </div>
-      <div v-else>
-        <vue-simplemde v-model="context.model" :configs="config" />
       </div>
     </b-card-body>
   </b-card>
