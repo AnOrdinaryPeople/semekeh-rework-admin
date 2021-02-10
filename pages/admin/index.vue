@@ -170,10 +170,10 @@
       </div>
     </card>
 
-    <!-- TITLE NEWS AND PRESTATION SECTION -->
+    <!-- MISC. SECTION -->
 
     <b-card class="my-4">
-      <b-row>
+      <b-row class="mb-4">
         <b-col cols="6">
           <b-card-title>
             <b-btn
@@ -203,6 +203,20 @@
           </b-card-title>
         </b-col>
       </b-row>
+
+      <formulate-form name="foundation" @submit="send('foundation')">
+        <formulate-input
+          type="text"
+          v-model="foundation.form.value"
+          label="BPI Foundation URL"
+          validation="required|regex_url"
+          :validation-rules="{regex_url: ({ value }) => regexURL(value)}"
+          :validation-messages="{regex_url: 'The link format is invalid'}"
+        />
+        <formulate-input label="Update" type="submit" :disabled="foundation.clicked">
+          <b-spinner v-if="foundation.clicked" variant="primary" small />
+        </formulate-input>
+      </formulate-form>
     </b-card>
 
     <!-- ALUMNI SECTION -->
@@ -300,7 +314,7 @@
                 v-model="company.form.link"
                 label="Link"
                 validation="required|regex_url"
-                :validation-rules="{regex_url: ({ value }) => new RegExp(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi).test(value)}"
+                :validation-rules="{regex_url: ({ value }) => regexURL(value)}"
                 :validation-messages="{regex_url: 'The link format is invalid'}"
               />
             </b-col>
@@ -346,7 +360,7 @@
                 v-model="social.form.link"
                 label="Link"
                 validation="required|regex_url"
-                :validation-rules="{regex_url: ({ value }) => new RegExp(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi).test(value)}"
+                :validation-rules="{regex_url: ({ value }) => regexURL(value)}"
                 :validation-messages="{regex_url: 'The link format is invalid'}"
               />
             </b-col>
@@ -443,7 +457,122 @@
 
     <!-- EDIT MODAL -->
 
-    <b-modal id="homepage-modal-edit" title="Edit" size="lg" hide-footer></b-modal>
+    <b-modal id="homepage-modal-edit" title="Edit" size="lg" hide-footer>
+      <form @submit.prevent="send(modalType, true)">
+        <div v-if="access['homepage-carousel.update'] && modalType === 'carousel'">
+          <b-row class="mb-2">
+            <b-col cols="6">
+              <b-form-select
+                v-model="modalEdit.type"
+                :options="[{value: 1, text: 'PNG Template'}, {value: 2, text: 'JPEG Template'}]"
+                required
+              />
+            </b-col>
+            <b-col cols="6">
+              <b-form-file
+                v-model="modalEdit.url"
+                accept="image/jpg, image/jpeg, image/png, image/webp"
+              />
+            </b-col>
+          </b-row>
+
+          <b-form-group label="Title">
+            <b-form-input v-model="modalEdit.title" required />
+          </b-form-group>
+
+          <b-form-group label="Description">
+            <b-form-textarea v-model="modalEdit.description" required />
+          </b-form-group>
+        </div>
+        <div v-else-if="access['homepage-alumni.update'] && modalType === 'alumni'">
+          <b-row>
+            <b-col sm="12" md="6" lg="6">
+              <b-form-group label="Name">
+                <b-form-input v-model="modalEdit.name" required />
+              </b-form-group>
+            </b-col>
+            <b-col sm="12" md="6" lg="6">
+              <b-form-group label="Company">
+                <b-form-input v-model="modalEdit.company" required />
+              </b-form-group>
+            </b-col>
+          </b-row>
+          <b-row class="my-2">
+            <b-col sm="12" md="6" lg="6">
+              <label>Content</label>
+              <b-form-textarea v-model="modalEdit.content" />
+            </b-col>
+            <b-col sm="12" md="6" lg="6">
+              <label>Image</label>
+              <b-form-file
+                v-model="modalEdit.url"
+                accept="image/jpg, image/jpeg, image/png, image/webp"
+              />
+            </b-col>
+          </b-row>
+        </div>
+        <div v-else-if="access['homepage-company.update'] && modalType === 'company'">
+          <b-row class="my-2">
+            <b-col sm="12" md="6" lg="6">
+              <label>Image</label>
+              <b-form-file
+                v-model="modalEdit.url"
+                accept="image/jpg, image/jpeg, image/png, image/webp"
+              />
+            </b-col>
+            <b-col sm="12" md="6" lg="6">
+              <label>Link</label>
+              <b-form-input v-model="modalEdit.link" required />
+            </b-col>
+          </b-row>
+        </div>
+        <div v-else-if="access['homepage-social-media.update'] && modalType === 'social'">
+          <b-row class="my-2">
+            <b-col sm="12" md="6" lg="6">
+              <label>Icon</label>
+              <b-form-input v-model="modalEdit.icon" required />
+              <span>
+                <a
+                  :href="`https://fontawesome.com/icons?d=gallery&s=brands&m=fre&q=${modalEdit.icon}`"
+                  target="_blank"
+                >Available icons</a>
+              </span>
+            </b-col>
+            <b-col sm="12" md="6" lg="6">
+              <label>Link</label>
+              <b-form-input v-model="modalEdit.link" required />
+            </b-col>
+          </b-row>
+        </div>
+        <div v-else-if="access['homepage-footer.update'] && modalType === 'footer'">
+          <b-row class="my-2">
+            <b-col sm="12" md="6" lg="6">
+              <label>Name</label>
+              <b-form-input v-model="modalEdit.key" required />
+            </b-col>
+            <b-col sm="12" md="6" lg="6">
+              <label>Value</label>
+              <b-form-input v-model="modalEdit.value" required />
+            </b-col>
+          </b-row>
+        </div>
+        <div v-else-if="modalType === 'section'">
+          <b-row class="my-2">
+            <b-col sm="12" md="6" lg="6">
+              <label>Title</label>
+              <b-form-input v-model="modalEdit.title" required />
+            </b-col>
+            <b-col sm="12" md="6" lg="6">
+              <label>Subtitle</label>
+              <b-form-input v-model="modalEdit.subtitle" required />
+            </b-col>
+          </b-row>
+        </div>
+        <formulate-input label="Update" type="submit" :disabled="[modalType].clicked">
+          <b-spinner v-if="[modalType].clicked" variant="primary" small />
+        </formulate-input>
+      </form>
+    </b-modal>
 
     <!-- DELETE MODAL -->
 
@@ -453,7 +582,15 @@
       header-bg-variant="danger"
       header-text-variant="light"
       hide-footer
-    ></b-modal>
+    >
+      <p>
+        Are you sure want to
+        <strong>delete</strong> this data? This action
+        <strong>cannot</strong> be undone
+      </p>
+      <b-btn class="btn btn-danger" :disabled="[modalType].clicked" @click="destroy(modalType)">Yes</b-btn>
+      <a href="#" class="btn btn-secondary" @click.prevent="$bvModal.hide('homepage-modal-del')">No</a>
+    </b-modal>
   </div>
 </template>
 
@@ -526,6 +663,7 @@ export default Vue.extend({
                 }
             ),
             section: [],
+            foundation: { form: { value: '' }, clicked: false },
             modalType: '',
             modalEdit: {},
             modalShow: {},
@@ -538,6 +676,7 @@ export default Vue.extend({
             this.carousel.table.items = data.carousel
             this.carousel.table.busy = false
 
+            this.foundation.form.value = data.foundation
             this.about = data.about
             ;(this as any).about.clicked = false
             this.section = data.section
@@ -547,17 +686,18 @@ export default Vue.extend({
         for (const l of list) await this.refreshTable(l)
     },
     methods: {
-        send(str: string) {},
         show(type: string, key: number) {
-            this.setModal(type, key, 'show')
-            this.modalType = type.replace(/homepage-/g, '')
-            ;(this as any).$bvModal.show('homepage-modal-show')
+            this.edit(type, key, 'show')
         },
-        edit(type: string, key: any) {
-            console.log('---- EDIT', type, key)
+        edit(type: string, key: any, modal: string = 'edit') {
+            type = type === 'homepage-social-media' ? 'social' : type
+
+            this.setModal(type, key, modal)
+            this.modalType = type.replace(/homepage-/g, '')
+            ;(this as any).$bvModal.show('homepage-modal-' + modal)
         },
         del(type: string, key: any) {
-            console.log('---- DELETE', type, key)
+            this.edit(type, key, 'del')
         },
         reqTable(type: string) {
             return this.$axios.get('/admin/homepage/' + type)
@@ -567,6 +707,107 @@ export default Vue.extend({
                 ;(this as any)[type].table.items = r.data
                 ;(this as any)[type].table.busy = false
             })
+        },
+        async send(type: string, isUpdate: boolean = false) {
+            const _this = this as any,
+                url: string = `/admin/homepage/${
+                    type + (type === 'foundation' ? '/1' : '')
+                }/${isUpdate ? '/update/' + _this.modalEdit.id : '/create'}`,
+                f = isUpdate ? _this.modalEdit : _this[type].form,
+                form = new FormData()
+
+            _this[type].clicked = true
+
+            Object.keys(f).forEach((o) => {
+                let val: any
+
+                try {
+                    val = o === 'video' ? f[o].results[0].url : f[o].fileList[0]
+                } catch (e) {
+                    val = f[o]
+                }
+
+                form.append(o, val)
+            })
+
+            await this.$axios
+                .post(url, form)
+                .then(async (r) => {
+                    await this.refreshTable(type)
+
+                    if (type !== 'section' && type !== 'foundation')
+                        _this.$formulate.reset(type)
+
+                    this.videoLoad = 0
+
+                    if (isUpdate) _this.$bvModal.hide('homepage-modal-edit')
+
+                    _this.toast(r.data.message, {
+                        title: 'Success',
+                        variant: 'success',
+                    })
+                })
+                .catch((e) => {
+                    _this.catchErr(e)
+                })
+
+            _this[type].clicked = false
+        },
+        async destroy(type: string) {
+            const _this = this as any
+
+            _this[type].clicked = true
+
+            await this.$axios
+                .delete(`/admin/homepage/${type}/delete/${_this.modalEdit.id}`)
+                .then(async (r) => {
+                    await this.refreshTable(type)
+                    _this.$bvModal.hide('homepage-modal-del')
+
+                    _this.toast(r.data.message, {
+                        title: 'Success',
+                        variant: 'success',
+                    })
+                })
+                .catch((e) => {
+                    _this.catchErr(e)
+                })
+
+            _this[type].clicked = false
+        },
+        async sendAbout() {
+            const form = new FormData(),
+                _this = this as any
+            let img
+
+            _this.about.clicked = true
+
+            try {
+                img = _this.aboutImg.fileList[0]
+            } catch (e) {
+                img = null
+            }
+
+            form.append('content', _this.about.content)
+            form.append('url', img)
+
+            await this.$axios
+                .post('/admin/homepage/about/update', form)
+                .then((r) => {
+                    _this.$formulate.reset('about')
+                    _this.about = r.data.result
+                    _this.about.clicked = false
+
+                    _this.toast(r.data.message, {
+                        title: 'Success',
+                        variant: 'success',
+                    })
+                })
+                .catch((e) => {
+                    _this.catchErr(e)
+                })
+
+            _this.about.clicked = false
         },
         async uploadFile(file: any, progress: any, error: any, options: any) {
             try {
@@ -633,9 +874,36 @@ export default Vue.extend({
             )
                 _this.modalEdit.url = null
         },
+        regexURL(value: string): boolean {
+            return new RegExp(
+                /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi
+            ).test(value)
+        },
+        beforeunload(e: any) {
+            if (this.videoLoad > 0 && this.$auth.loggedIn)
+                e.returnValue =
+                    'Video is being uploaded. Are you sure you want to quit?'
+        },
     },
     computed: {
         ...mapGetters(['access']),
+    },
+    beforeRouteLeave(to, from, next) {
+        if (this.videoLoad > 0 && this.$auth.loggedIn) {
+            if (
+                window.confirm(
+                    'Video is being uploaded. Are you sure you want to quit?'
+                )
+            )
+                next()
+            else next(false)
+        } else next()
+    },
+    created() {
+        window.addEventListener('beforeunload', this.beforeunload)
+    },
+    destroyed() {
+        window.removeEventListener('beforeunload', this.beforeunload)
     },
 })
 </script>
