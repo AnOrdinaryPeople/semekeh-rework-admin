@@ -41,7 +41,7 @@
       </template>
       <template v-if="checkAccess" #cell(action)="data">
         <a
-          v-if="access[`${manual ? type : `homepage-${type}`}.show`] && show"
+          v-if="access[`${type}.show`] && show"
           class="btn btn-info btn-sm"
           href="#"
           v-b-tooltip.hover
@@ -51,7 +51,7 @@
           <fa icon="eye" />
         </a>
         <a
-          v-if="access[`${manual ? type : `homepage-${type}`}.update`] && edit"
+          v-if="access[`${type}.update`] && edit"
           class="btn btn-primary btn-sm"
           href="#"
           v-b-tooltip.hover
@@ -61,7 +61,7 @@
           <fa icon="edit" />
         </a>
         <a
-          v-if="access[`${manual ? type : `homepage-${type}`}.delete`] && del"
+          v-if="access[`${type}.delete`] && del"
           class="btn btn-danger btn-sm"
           href="#"
           v-b-tooltip.hover
@@ -145,10 +145,6 @@ export default Vue.extend({
             required: true,
             type: String,
         },
-        manual: {
-            default: false,
-            type: Boolean,
-        },
         search: {
             default: true,
             type: Boolean,
@@ -192,14 +188,7 @@ export default Vue.extend({
             const a = this.access,
                 t = this.type
 
-            if (this.manual)
-                return a[t + '.show'] || a[t + '.update'] || a[t + '.delete']
-            else
-                return (
-                    a[`homepage-${t}.show`] ||
-                    a[`homepage-${t}.show`] ||
-                    a[`homepage-${t}.show`]
-                )
+            return a[t + '.show'] || a[t + '.update'] || a[t + '.delete']
         },
     },
 })

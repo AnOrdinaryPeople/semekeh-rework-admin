@@ -1,7 +1,7 @@
 <template>
   <div>
     <card access-name="homepage-carousel" title="Carousel">
-      <create access-name="homepage-carousel" type="carousel">
+      <create access-name="homepage-carousel">
         <formulate-form name="carousel" @submit="send('carousel')">
           <b-row class="form-group">
             <b-col cols="6">
@@ -49,7 +49,7 @@
         </formulate-form>
       </create>
 
-      <data-table type="carousel" :table="carousel.table" :edit="edit" :del="del" />
+      <data-table type="homepage-carousel" :table="carousel.table" :edit="edit" :del="del" />
     </card>
 
     <card
@@ -58,7 +58,7 @@
       :h-data="section[0]"
       @h-edit="edit"
     >
-      <create access-name="homepage-video" type="video">
+      <create access-name="homepage-video">
         <formulate-form name="video" @submit="send('video')">
           <b-row class="form-group">
             <b-col cols="6">
@@ -94,7 +94,13 @@
         </formulate-form>
       </create>
 
-      <data-table type="video" :table="video.table" :show="show" :del="del" :search="false">
+      <data-table
+        type="homepage-homepage-video"
+        :table="video.table"
+        :show="show"
+        :del="del"
+        :search="false"
+      >
         <template #default="data">
           <b-btn
             v-if="access['homepage-video.update']"
@@ -197,7 +203,7 @@
       :h-data="section[4]"
       @h-edit="edit"
     >
-      <create access-name="homepage-alumni" type="alumni">
+      <create access-name="homepage-alumni">
         <formulate-form name="alumni" @submit="send('alumni')">
           <b-row>
             <b-col sm="12" md="6" lg="6">
@@ -242,7 +248,13 @@
         </formulate-form>
       </create>
 
-      <data-table type="alumni" :table="alumni.table" :show="show" :edit="edit" :del="del">
+      <data-table
+        type="homepage-homepage-homepage-alumni"
+        :table="alumni.table"
+        :show="show"
+        :edit="edit"
+        :del="del"
+      >
         <template #default="data">
           <b-btn
             v-if="access['homepage-alumni.update']"
@@ -256,6 +268,50 @@
           </b-btn>
         </template>
       </data-table>
+    </card>
+
+    <card
+      access-name="homepage-company"
+      :title="cardTitle(5, 'Company')"
+      :h-data="section[5]"
+      @h-edit="edit"
+    >
+      <create access-name="homepage-company">
+        <formulate-form name="company" @submit="send('company')">
+          <b-row class="mb-2">
+            <b-col sm="12" md="6" lg="6">
+              <formulate-input
+                type="image"
+                v-model="company.form.url"
+                label="Image"
+                validation="required|mime:image/jpg,image/jpeg,image/png,image/webp"
+                accept="image/jpg, image/jpeg, image/png, image/webp"
+              />
+            </b-col>
+            <b-col sm="12" md="6" lg="6">
+              <formulate-input
+                type="text"
+                v-model="company.form.link"
+                label="Link"
+                validation="required|regex_url"
+                :validation-rules="{regex_url: ({ value }) => new RegExp(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi).test(value)}"
+                :validation-messages="{regex_url: 'The link format is invalid'}"
+              />
+            </b-col>
+          </b-row>
+          <formulate-input label="Submit" type="submit" :disabled="company.clicked">
+            <b-spinner v-if="company.clicked" variant="primary" small />
+          </formulate-input>
+        </formulate-form>
+      </create>
+
+      <data-table
+        type="homepage-company"
+        :table="company.table"
+        :show="show"
+        :edit="edit"
+        :del="del"
+      />
     </card>
   </div>
 </template>

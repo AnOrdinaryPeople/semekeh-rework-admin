@@ -3,13 +3,13 @@
     <b-btn
       class="mb-4"
       variant="primary"
-      v-b-toggle="type + '-collapse'"
+      v-b-toggle="accessName + '-collapse'"
       @click="clicked = !clicked"
     >
       <fa class="side-icon" :class="clicked ? 'rotate-180' : ''" icon="chevron-down" />&nbsp;Create
     </b-btn>
 
-    <b-collapse :id="type + '-collapse'">
+    <b-collapse :id="accessName + '-collapse'">
       <slot></slot>
     </b-collapse>
   </div>
@@ -21,10 +21,6 @@ import { mapGetters } from 'vuex'
 
 export default Vue.extend({
     props: {
-        type: {
-            required: true,
-            type: String,
-        },
         accessName: {
             required: true,
             type: String,
