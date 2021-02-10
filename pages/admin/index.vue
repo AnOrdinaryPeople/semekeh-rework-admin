@@ -568,8 +568,8 @@
             </b-col>
           </b-row>
         </div>
-        <formulate-input label="Update" type="submit" :disabled="[modalType].clicked">
-          <b-spinner v-if="[modalType].clicked" variant="primary" small />
+        <formulate-input label="Update" type="submit" :disabled="modalEditBtn">
+          <b-spinner v-if="modalEditBtn" variant="primary" small />
         </formulate-input>
       </form>
     </b-modal>
@@ -588,7 +588,7 @@
         <strong>delete</strong> this data? This action
         <strong>cannot</strong> be undone
       </p>
-      <b-btn class="btn btn-danger" :disabled="[modalType].clicked" @click="destroy(modalType)">Yes</b-btn>
+      <b-btn class="btn btn-danger" :disabled="modalDelBtn" @click="destroy(modalType)">Yes</b-btn>
       <a href="#" class="btn btn-secondary" @click.prevent="$bvModal.hide('homepage-modal-del')">No</a>
     </b-modal>
   </div>
@@ -601,18 +601,19 @@ import { mapGetters } from 'vuex'
 export default Vue.extend({
     data: () => {
         const template = (fields: any, form: object) => {
-            fields.push({ key: 'action' })
+                fields.push({ key: 'action' })
 
-            return {
-                table: {
-                    fields,
-                    items: [],
-                    busy: true,
-                },
-                clicked: false,
-                form,
-            }
-        }
+                return {
+                    table: {
+                        fields,
+                        items: [],
+                        busy: true,
+                    },
+                    clicked: false,
+                    form,
+                }
+            },
+            modalEdit: any = {}
 
         return {
             carousel: template([{ key: 'title', sortable: true }], {
@@ -665,8 +666,10 @@ export default Vue.extend({
             section: [],
             foundation: { form: { value: '' }, clicked: false },
             modalType: '',
-            modalEdit: {},
+            modalEdit,
             modalShow: {},
+            modalEditBtn: false,
+            modalDelBtn: false,
             aboutImg: null,
             videoLoad: 0,
         }
@@ -686,14 +689,17 @@ export default Vue.extend({
         for (const l of list) await this.refreshTable(l)
     },
     methods: {
-        show(type: string, key: number) {
+        show(type: string, key: any) {
             this.edit(type, key, 'show')
         },
         edit(type: string, key: any, modal: string = 'edit') {
-            type = type === 'homepage-social-media' ? 'social' : type
+            type =
+                type === 'homepage-social-media'
+                    ? 'social'
+                    : type.replace(/homepage-/g, '')
 
             this.setModal(type, key, modal)
-            this.modalType = type.replace(/homepage-/g, '')
+            this.modalType = type
             ;(this as any).$bvModal.show('homepage-modal-' + modal)
         },
         del(type: string, key: any) {
@@ -712,11 +718,12 @@ export default Vue.extend({
             const _this = this as any,
                 url: string = `/admin/homepage/${
                     type + (type === 'foundation' ? '/1' : '')
-                }/${isUpdate ? '/update/' + _this.modalEdit.id : '/create'}`,
+                }/${isUpdate ? 'update/' + _this.modalEdit.id : 'create'}`,
                 f = isUpdate ? _this.modalEdit : _this[type].form,
                 form = new FormData()
 
             _this[type].clicked = true
+            this.modalEditBtn = true
 
             Object.keys(f).forEach((o) => {
                 let val: any
@@ -752,11 +759,12 @@ export default Vue.extend({
                 })
 
             _this[type].clicked = false
+            this.modalEditBtn = false
         },
         async destroy(type: string) {
             const _this = this as any
 
-            _this[type].clicked = true
+            this.modalDelBtn = true
 
             await this.$axios
                 .delete(`/admin/homepage/${type}/delete/${_this.modalEdit.id}`)
@@ -773,7 +781,7 @@ export default Vue.extend({
                     _this.catchErr(e)
                 })
 
-            _this[type].clicked = false
+            this.modalDelBtn = false
         },
         async sendAbout() {
             const form = new FormData(),
@@ -853,17 +861,15 @@ export default Vue.extend({
 
             return str
         },
-        setModal(type: string, key: number, from = '') {
-            const _this = (this as any).modalEdit
-
+        setModal(type: string, key: any, from = '') {
             this.modalEdit = {}
 
             if (from === 'show') this.modalShow = key
             else Object.assign(this.modalEdit, key)
 
             if (type === 'video' && from === 'edit') {
-                _this.modalEdit.thumbnail = null
-                _this.modalEdit.video = null
+                this.modalEdit.thumbnail = null
+                this.modalEdit.video = null
             }
 
             if (
@@ -872,7 +878,7 @@ export default Vue.extend({
                     type === 'carousel') &&
                 from === 'edit'
             )
-                _this.modalEdit.url = null
+                this.modalEdit.url = null
         },
         regexURL(value: string): boolean {
             return new RegExp(
