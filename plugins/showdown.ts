@@ -29,7 +29,7 @@ VueShowdown.showdown.extension('result', () => [
     {
         type: "output",
         regex: /<a(.*)>/g,
-        replace: '<a target="_blank" rel="noopener" $1>',
+        replace: '<a target="_blank" rel="noopener" class="text-blue" $1>',
     },
 ])
 

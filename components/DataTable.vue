@@ -33,7 +33,7 @@
         <b-img :src="sauce('storage/' + data.item.url)" style="max-width: 175px" />
       </template>
       <template #cell(link)="data">
-        <a :href="data.item.link" target="_blank">{{ data.item.link }}</a>
+        <a class="text-blue" :href="data.item.link" target="_blank">{{ data.item.link }}</a>
       </template>
       <template #cell(icon)="data">
         <fa :icon="['fab', data.item.icon]" />
@@ -117,6 +117,7 @@
           v-model="currentPage"
           :per-page="perPage"
           :total-rows="total"
+          @change="toTable()"
         />
       </b-col>
       <b-col cols="6" class="text-right">
@@ -166,6 +167,11 @@ export default Vue.extend({
         onFiltered(filteredItems: any) {
             this.totalItem = filteredItems.length
             this.currentPage = 1
+        },
+        toTable() {
+            document
+                .getElementById('parent-card-' + this.type)
+                ?.scrollIntoView({ behavior: 'smooth' })
         },
     },
     computed: {

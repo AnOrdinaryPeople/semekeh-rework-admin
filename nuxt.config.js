@@ -60,7 +60,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa',
+    // '@nuxtjs/pwa',
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
   ],
@@ -99,7 +99,9 @@ export default {
     strategies: {
       local: {
         provider: 'laravel/jwt',
-        url: env.api
+        url: env.api,
+        token: { maxAge: 604800 },
+        refreshToken: { maxAge: 1209600 }
       }
     }
   },
@@ -109,15 +111,15 @@ export default {
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
-  pwa: {
-    manifest: {
-      lang: 'en',
-      name: env.name,
-      short_name: env.name,
-      description: 'Bermartabat, Berkualitas, dan Tepercaya',
-      background_color: '#f8fafc'
-    },
-  },
+  // pwa: {
+  //   manifest: {
+  //     lang: 'en',
+  //     name: env.name,
+  //     short_name: env.name,
+  //     description: 'Bermartabat, Berkualitas, dan Tepercaya',
+  //     background_color: '#f8fafc'
+  //   },
+  // },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

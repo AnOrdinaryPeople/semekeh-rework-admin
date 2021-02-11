@@ -58,7 +58,7 @@
             href="#"
             class="btn btn-primary ml-4"
             @click.prevent="passChange = !passChange"
-          >Change password</a>
+          >Toggle password</a>
         </div>
       </div>
     </formulate-form>

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="access[accessName + '.create']" class="mb-4">
+  <div v-if="access[accessName + '.create']" :id="`parent-card-${accessName}`" class="mb-4">
     <b-btn
       class="mb-4"
       variant="primary"

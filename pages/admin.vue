@@ -11,7 +11,7 @@
                 <strong class="underline">{{ i.name }}</strong>
               </span>
               <span v-else>
-                <nuxt-link :to="i.to">{{ i.name }}</nuxt-link>
+                <nuxt-link class="text-blue" :to="i.to">{{ i.name }}</nuxt-link>
               </span>
             </b-breadcrumb-item>
           </b-breadcrumb>
@@ -20,7 +20,9 @@
     </header>
 
     <div class="h-app">
-      <nuxt-child />
+      <transition name="fade" mode="out-in">
+        <nuxt-child />
+      </transition>
     </div>
   </b-container>
 </template>
