@@ -5,6 +5,10 @@
     min-height: 60vh;
 }
 
+.underline{
+    text-decoration: underline;
+}
+
 .uppercase{
     text-transform: uppercase;
 }
@@ -26,7 +30,7 @@
 }
 
 .list-style-none > .nav-item > .nuxt-link-exact-active{
-    background-color: #007bff;
+    background-color: #022c43;
     color: #f8fafc;
     margin: 10px;
     border-radius: .25rem;

@@ -8,7 +8,7 @@
           <b-breadcrumb>
             <b-breadcrumb-item v-for="(i, k) in bread" :key="k" :active="k + 1 === bread.length">
               <span v-if="k + 1 === bread.length">
-                <strong>{{ i.name }}</strong>
+                <strong class="underline">{{ i.name }}</strong>
               </span>
               <span v-else>
                 <nuxt-link :to="i.to">{{ i.name }}</nuxt-link>

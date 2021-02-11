@@ -7,7 +7,7 @@
 
       <template #footer="{ hide }">
         <div class="text-center p-3">
-          <a class="text-bpi-blue text-decoration-none" href="#" @click.prevent="logout(hide)">
+          <a class="text-decoration-none" href="#" @click.prevent="logout(hide)">
             <strong>Logout</strong>
           </a>
         </div>

@@ -19,7 +19,7 @@
           <b-form-group :disabled="passChange" label="New Password">
             <b-input-group>
               <b-input-group-prepend>
-                <b-btn variant="bpi-blue" @click="view = !view">
+                <b-btn variant="primary" @click="view = !view">
                   <fa :icon="view ? 'eye-slash' : 'eye'" />
                 </b-btn>
               </b-input-group-prepend>
@@ -31,7 +31,7 @@
           <b-form-group :disabled="passChange" label="Confirm Password">
             <b-input-group>
               <b-input-group-prepend>
-                <b-btn variant="bpi-blue" @click="vieww = !vieww">
+                <b-btn variant="primary" @click="vieww = !vieww">
                   <fa :icon="vieww ? 'eye-slash' : 'eye'" />
                 </b-btn>
               </b-input-group-prepend>

@@ -3,11 +3,19 @@ $body-bg: #f8fafc;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
-$bpiBlue: #022c43;
+$primary: #022c43;
+$secondary: #757575;
+$success: #4Caf50;
+$warning: #ffb300;
+$danger: #e53935;
+$info: #03a9f4;
+$white: #fafafa;
+$black: #181a1b;
+// $bpiBlue: #022c43;
 $bpiYellow: #ffd700;
 
 $theme-colors: (
-    bpi-blue: $bpiBlue,
+    // bpi-blue: $bpiBlue,
     bpi-yellow: $bpiYellow,
 ) !default;
 
