@@ -32,6 +32,14 @@
     border-radius: .25rem;
 }
 
+.navbar-nav > .nav-item > .nuxt-link-exact-active{
+    color: #fff !important;
+}
+
 .nav-link .nuxt-link-exact-active{
     padding: .5rem 0
+}
+
+.form-control:disabled{
+    background-color: #e9ecef !important;
 }

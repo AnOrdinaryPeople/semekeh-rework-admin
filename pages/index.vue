@@ -68,13 +68,11 @@ export default Vue.extend({
             await this.$auth
                 .loginWith('local', { data: this.form })
                 .then(async ({ data }: any) => {
-                    // _this.$refs.reeee.reset()
-                    // this.clicked = false
                     await this.$auth.setUserToken(data.token)
 
                     this.$store.dispatch(
                         'setAccess',
-                        JSON.parse(atob(data.token.split('.')[1])).access
+                        JSON.parse(atob(data.token.split('.')[1]))
                     )
 
                     this.$router.push('/admin')
