@@ -1,6 +1,9 @@
 <template>
-  <b-navbar fixed="top" type="dark" variant="primary">
-    <nuxt-link class="navbar-brand" to="/admin">{{ appName }}</nuxt-link>
+  <b-navbar class="shadow" fixed="top" type="dark" variant="primary">
+    <nuxt-link class="navbar-brand" to="/admin">
+      <b-img class="d-inline align-top" fluid width="30" src="/icon.png" />
+      {{ appName }}
+    </nuxt-link>
 
     <b-navbar-toggle target="app-nav" />
 

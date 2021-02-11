@@ -14,7 +14,7 @@ const obj: any = {
     h6: 'markdown-header',
 }
 
-VueShowdown.showdown.extension('result', [
+VueShowdown.showdown.extension('result', () => [
     ...Object.keys(obj).map((val: string) => ({
         type: 'output',
         regex: new RegExp(`<${val}(.*)>`, 'g'),

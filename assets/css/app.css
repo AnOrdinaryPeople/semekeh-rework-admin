@@ -24,3 +24,14 @@
 .formulate-input .formulate-input-element {
     max-width: none !important;
 }
+
+.list-style-none > .nav-item > .nuxt-link-exact-active{
+    background-color: #007bff;
+    color: #f8fafc;
+    margin: 10px;
+    border-radius: .25rem;
+}
+
+.nav-link .nuxt-link-exact-active{
+    padding: .5rem 0
+}

@@ -38,7 +38,7 @@ export default Vue.extend({
         },
     },
     data: () => ({
-        menu: ['Result', 'Input'],
+        menu: ['Input', 'Result'],
         active: 0,
         config: {
             indentWithTabs: false,

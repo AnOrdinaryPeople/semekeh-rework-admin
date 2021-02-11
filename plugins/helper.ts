@@ -45,7 +45,9 @@ Vue.mixin({
         toast(txt: any, obj: any) {
             (this as any).$bvToast.toast(txt, {
                 ...obj,
-                toaster: obj.toaster ?? 'b-toaster-bottom-center'
+                title: obj?.title ?? 'Success',
+                variant: obj?.variant ?? 'success',
+                toaster: obj?.toaster ?? 'b-toaster-bottom-center'
             })
         }
     }

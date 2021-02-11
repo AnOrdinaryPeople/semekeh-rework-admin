@@ -749,10 +749,7 @@ export default Vue.extend({
 
                     if (isUpdate) _this.$bvModal.hide('homepage-modal-edit')
 
-                    _this.toast(r.data.message, {
-                        title: 'Success',
-                        variant: 'success',
-                    })
+                    _this.toast(r.data.message)
                 })
                 .catch((e) => {
                     _this.catchErr(e)
@@ -772,10 +769,7 @@ export default Vue.extend({
                     await this.refreshTable(type)
                     _this.$bvModal.hide('homepage-modal-del')
 
-                    _this.toast(r.data.message, {
-                        title: 'Success',
-                        variant: 'success',
-                    })
+                    _this.toast(r.data.message)
                 })
                 .catch((e) => {
                     _this.catchErr(e)
@@ -806,10 +800,7 @@ export default Vue.extend({
                     _this.about = r.data.result
                     _this.about.clicked = false
 
-                    _this.toast(r.data.message, {
-                        title: 'Success',
-                        variant: 'success',
-                    })
+                    _this.toast(r.data.message)
                 })
                 .catch((e) => {
                     _this.catchErr(e)
@@ -844,10 +835,7 @@ export default Vue.extend({
                 .post(`/admin/homepage/${type}/publish/${id}`)
                 .then((r) => {
                     this.refreshTable(type)
-                    ;(this as any).toast(r.data.message, {
-                        title: 'Success',
-                        variant: 'success',
-                    })
+                    ;(this as any).toast(r.data.message)
                 })
                 .catch((e) => (this as any).catchErr(e))
         },

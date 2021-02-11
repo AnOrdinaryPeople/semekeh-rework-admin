@@ -1,11 +1,9 @@
 <template>
-  <vue-showdown :markdown="content" :extension="['result']" />
+  <vue-showdown :markdown="content" :extensions="['result']" />
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-
-// require('~/plugins/showdown')
 
 export default Vue.extend({
     props: {

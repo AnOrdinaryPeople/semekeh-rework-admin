@@ -1,5 +1,5 @@
 <template>
-  <b-card v-if="access[accessName + '.show']" class="my-4">
+  <b-card v-if="access[accessName + '.' + accessTarget]" class="my-4">
     <b-card-title v-if="hData">
       <b-btn
         v-if="access[accessName + '.update']"
@@ -27,6 +27,10 @@ export default Vue.extend({
         accessName: {
             type: String,
             required: true,
+        },
+        accessTarget: {
+            type: String,
+            default: 'show',
         },
         title: {
             type: String,
