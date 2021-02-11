@@ -710,8 +710,13 @@ export default Vue.extend({
         },
         async refreshTable(type: string) {
             await this.reqTable(type).then((r) => {
-                ;(this as any)[type].table.items = r.data
-                ;(this as any)[type].table.busy = false
+                const t = this as any
+
+                if (type === 'section') t[type] = r.data
+                else {
+                    t[type].table.items = r.data
+                    t[type].table.busy = false
+                }
             })
         },
         async send(type: string, isUpdate: boolean = false) {
