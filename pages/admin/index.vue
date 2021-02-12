@@ -339,6 +339,12 @@
     <card access-name="homepage-social-media" title="Social Media">
       <create access-name="homepage-social-media">
         <formulate-form name="social" @submit="send('social')">
+          <a
+            class="text-blue"
+            href="https://fontawesome.com/icons?d=gallery&s=brands&m=free"
+            target="_blank"
+          >Available icons</a>
+
           <b-row class="mb-2">
             <b-col sm="12" md="6" lg="6">
               <formulate-input
@@ -347,12 +353,6 @@
                 label="Icon"
                 validation="required"
               />
-              <span>
-                <a
-                  href="https://fontawesome.com/icons?d=gallery&s=brands&m=free"
-                  target="_blank"
-                >Available icons</a>
-              </span>
             </b-col>
             <b-col sm="12" md="6" lg="6">
               <formulate-input
@@ -527,16 +527,16 @@
           </b-row>
         </div>
         <div v-else-if="access['homepage-social-media.update'] && modalType === 'social'">
+          <a
+            class="text-blue"
+            :href="`https://fontawesome.com/icons?d=gallery&s=brands&m=fre&q=${modalEdit.icon}`"
+            target="_blank"
+          >Available icons</a>
+
           <b-row class="my-2">
             <b-col sm="12" md="6" lg="6">
               <label>Icon</label>
               <b-form-input v-model="modalEdit.icon" required />
-              <span>
-                <a
-                  :href="`https://fontawesome.com/icons?d=gallery&s=brands&m=fre&q=${modalEdit.icon}`"
-                  target="_blank"
-                >Available icons</a>
-              </span>
             </b-col>
             <b-col sm="12" md="6" lg="6">
               <label>Link</label>

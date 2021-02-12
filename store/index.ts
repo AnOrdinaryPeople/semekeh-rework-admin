@@ -3,14 +3,16 @@ import { GetterTree, ActionTree, MutationTree } from 'vuex'
 
 export const state = () => ({
     access: {},
-    role: ''
+    role: '',
+    study: {}
 })
 
 export type RootState = ReturnType<typeof state>
 
 export const getters: GetterTree<RootState, RootState> = {
     access: s => s.access,
-    role: s => s.role
+    role: s => s.role,
+    study: s => s.study
 }
 
 export const actions: ActionTree<RootState, RootState> = {
@@ -31,10 +33,14 @@ export const actions: ActionTree<RootState, RootState> = {
             commit('SET_ACCESS', data.access)
             commit('SET_ROLE', data.role)
         }
+    },
+    setStudy({ commit }, data) {
+        commit('SET_STUDY', data)
     }
 }
 
 export const mutations: MutationTree<RootState> = {
     SET_ACCESS: (s, data: any) => s.access = data,
-    SET_ROLE: (s, data: string) => s.role = data
+    SET_ROLE: (s, data: string) => s.role = data,
+    SET_STUDY: (s, data) => s.study = data
 }

@@ -69,6 +69,7 @@ export default Vue.extend({
                     { name: 'Role', link: '/role' },
                 ],
             },
+            { name: 'Settings', link: '/settings' },
             { name: 'Audits', link: '/audits' },
         ]
 

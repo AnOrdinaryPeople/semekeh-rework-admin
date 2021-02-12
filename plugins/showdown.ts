@@ -6,12 +6,12 @@ const obj: any = {
     table: 'table table-striped table-responsive',
     img: 'img-fluid',
     blockquote: 'bpi-blockquote',
-    h1: 'pb-3 mb-3 border-bottom markdown-header',
-    h2: 'pb-2 mb-2 border-bottom markdown-header',
-    h3: 'markdown-header',
-    h4: 'markdown-header',
-    h5: 'markdown-header',
-    h6: 'markdown-header',
+    h1: 'pb-3 mb-3 border-bottom text-primary',
+    h2: 'pb-2 mb-2 border-bottom text-primary',
+    h3: 'text-primary',
+    h4: 'text-primary',
+    h5: 'text-primary',
+    h6: 'text-primary',
 }
 
 VueShowdown.showdown.extension('result', () => [

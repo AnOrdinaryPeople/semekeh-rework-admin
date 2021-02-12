@@ -1,29 +1,18 @@
 <template>
-  <b-card>
-    <template #header>
-      <b-nav card-header tabs>
-        <b-nav-item
-          v-for="(i, k) in menu"
-          :key="k"
-          :active="active === k"
-          @click="active = k"
-        >{{ i }}</b-nav-item>
-      </b-nav>
-    </template>
-
-    <b-card-body>
-      <div v-if="active === 0">
+  <b-card no-body>
+    <b-tabs card>
+      <b-tab title="Input" active>
         <vue-simplemde v-model="context.model" :configs="config" />
-      </div>
-      <div v-else>
+      </b-tab>
+      <b-tab title="Result">
         <div v-if="context.model !== ''">
           <markdown :content="context.model" />
         </div>
         <div v-else>
           <h4 class="text-center text-secondary">Input the markdown to check the result</h4>
         </div>
-      </div>
-    </b-card-body>
+      </b-tab>
+    </b-tabs>
   </b-card>
 </template>
 
@@ -39,7 +28,6 @@ export default Vue.extend({
     },
     data: () => ({
         menu: ['Input', 'Result'],
-        active: 0,
         config: {
             indentWithTabs: false,
             spellChecker: false,

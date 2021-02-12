@@ -36,8 +36,14 @@
         <a class="text-blue" :href="data.item.link" target="_blank">{{ data.item.link }}</a>
       </template>
       <template #cell(icon)="data">
-        <fa :icon="['fab', data.item.icon]" />
-        <span class="pl-2">{{ '&nbsp;' + data.item.icon }}</span>
+        <b-row no-gutters>
+          <b-col cols="2" class="text-center">
+            <fa :icon="['fab', data.item.icon]" />
+          </b-col>
+          <b-col cols="10">
+            <span class="pl-2">{{ data.item.icon }}</span>
+          </b-col>
+        </b-row>
       </template>
       <template v-if="checkAccess" #cell(action)="data">
         <a
