@@ -75,7 +75,7 @@
         <strong>delete</strong> this data? This action
         <strong>cannot</strong> be undone
       </p>
-      <b-btn class="btn btn-danger" :disabled="clicked.img" @click="delImg(modalType)">Yes</b-btn>
+      <b-btn class="btn btn-danger" :disabled="clicked.img" @click="delImg()">Yes</b-btn>
       <a href="#" class="btn btn-secondary" @click.prevent="$bvModal.hide('modal-del')">No</a>
     </b-modal>
   </div>
@@ -123,7 +123,12 @@ export default Vue.extend({
         async render() {
             this.ready = false
 
-            if (this.id > 0 && this.access[this.acc + '.show']) {
+            if (
+                this.id > 0 &&
+                (this.access[this.acc + '.show'] ||
+                    this.access['gallery.show'] ||
+                    this.access['student-council.update'])
+            ) {
                 await this.$axios
                     .get('/admin/profile/' + this.id)
                     .then(async (r) => {

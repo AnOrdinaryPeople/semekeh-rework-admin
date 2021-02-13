@@ -13,6 +13,7 @@ export default {
   env: {
     appName: env.name,
     appURL: env.api,
+    urlFE: env.fe,
     key: env.recapKey,
     appEnv: env.app
   },
@@ -100,8 +101,8 @@ export default {
       local: {
         provider: 'laravel/jwt',
         url: env.api,
-        token: { maxAge: 604800 },
-        refreshToken: { maxAge: 1209600 }
+        token: { maxAge: 10080 * 60 },
+        refreshToken: { maxAge: 20160 * 60 }
       }
     }
   },

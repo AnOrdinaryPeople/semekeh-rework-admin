@@ -33,23 +33,16 @@ import Vue from 'vue'
 export default Vue.extend({
     computed: {
         bread() {
-            let obj: any = [],
+            let to = '',
                 path = this.$route.path.split('/')
 
             path.shift()
 
-            path.reduce((a: any, b, c) => {
-                obj.push({
-                    name: b.replace(/-/g, ' '),
-                    to: a[c - 1]
-                        ? `/${a[c - 1].name.replace(/\s+/g, '-')}/${b}`
-                        : '/' + b,
-                })
+            return path.map((i) => {
+                to += '/' + i
 
-                return obj
-            }, [])
-
-            return obj
+                return { name: i.replace(/-/g, ' '), to }
+            })
         },
     },
 })

@@ -14,6 +14,7 @@
               accept="image/jpg, image/jpeg, image/png, image/webp"
             />
             <b-img fluid :src="sauce('storage/' + view.banner)" />
+            <small class="text-muted font-italic">Current banner</small>
           </b-col>
         </b-row>
 
@@ -110,7 +111,6 @@ export default Vue.extend({
                 t = this as any
 
             this.clicked = true
-
             ;['data', 'dataa'].forEach((d, k) => {
                 Object.keys(t[d]).forEach((i: any) => {
                     const str = i + (k === 1 ? '_2' : '')

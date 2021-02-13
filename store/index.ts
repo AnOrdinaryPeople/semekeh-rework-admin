@@ -1,4 +1,3 @@
-import { parse } from '@fortawesome/fontawesome-svg-core'
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
 
 export const state = () => ({

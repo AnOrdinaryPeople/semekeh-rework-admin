@@ -4,6 +4,7 @@ Vue.mixin({
     data: () => ({
         appName: process.env.appName,
         appURL: process.env.appURL,
+        urlFE: process.env.urlFE,
         isDev: process.env.appEnv !== 'production',
     }),
     methods: {
