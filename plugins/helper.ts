@@ -41,7 +41,7 @@ Vue.mixin({
         },
         logForm(form: any) {
             for (var pair of form.entries())
-                console.log(pair[0], pair[1])
+                console.log(pair[0], pair[1], typeof pair[1])
         },
         toast(txt: any, obj: any) {
             (this as any).$bvToast.toast(txt, {

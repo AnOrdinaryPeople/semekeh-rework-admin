@@ -125,15 +125,19 @@ export default Vue.extend({
             this.clicked.agenda = true
 
             Object.keys(this.form).forEach((i: any) => {
-                let val: any
+                // let val: any
 
-                try {
-                    val = t.form[i].fileList[0]
-                } catch (e) {
-                    val = t.form[i]
-                }
+                // try {
+                //     val = t.form[i].fileList[0]
+                // } catch (e) {
+                //     val = t.form[i]
+                // }
 
-                form.append(i, val)
+                // form.append(i, val)
+
+                if (typeof t.form[i] === 'object' && t.form[i] !== null)
+                    form.append(i, t.form[i].fileList[0])
+                else if (t.form[i] !== null) form.append(i, t.form[i])
             })
 
             await this.$axios
