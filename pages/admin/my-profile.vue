@@ -16,7 +16,7 @@
 
       <b-row class="mb-2">
         <b-col cols="6">
-          <b-form-group :disabled="passChange" label="New Password">
+          <b-form-group :disabled="passChange" label="New password">
             <b-input-group>
               <b-input-group-prepend>
                 <b-btn variant="primary" @click="view = !view">
@@ -28,7 +28,7 @@
           </b-form-group>
         </b-col>
         <b-col cols="6">
-          <b-form-group :disabled="passChange" label="Confirm Password">
+          <b-form-group :disabled="passChange" label="Confirm password">
             <b-input-group>
               <b-input-group-prepend>
                 <b-btn variant="primary" @click="vieww = !vieww">

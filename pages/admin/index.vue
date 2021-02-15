@@ -730,16 +730,22 @@ export default Vue.extend({
             _this[type].clicked = true
             this.modalEditBtn = true
 
-            Object.keys(f).forEach((o) => {
-                let val: any
+            Object.keys(f).forEach((i) => {
+                // let val: any
 
-                try {
-                    val = o === 'video' ? f[o].results[0].url : f[o].fileList[0]
-                } catch (e) {
-                    val = f[o]
-                }
+                // try {
+                //     val = i === 'video' ? f[i].results[0].url : f[i].fileList[0]
+                // } catch (e) {
+                //     val = f[i]
+                // }
 
-                form.append(o, val)
+                // form.append(o, val)
+                if (typeof f[i] === 'object' && f[i] !== null) {
+                    form.append(
+                        i,
+                        i === 'video' ? f[i].results[0].url : f[i].fileList[0]
+                    )
+                } else if (f[i] !== null) form.append(i, f[i])
             })
 
             await this.$axios

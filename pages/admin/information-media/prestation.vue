@@ -117,6 +117,7 @@ export default Vue.extend({
             fields: [
                 { key: 'title', sortable: true },
                 { key: 'rank', sortable: true },
+                { key: 'year', sortable: true },
                 { key: 'action' },
             ],
             items: [],
