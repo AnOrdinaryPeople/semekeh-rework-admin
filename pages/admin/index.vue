@@ -203,20 +203,6 @@
           </b-card-title>
         </b-col>
       </b-row>
-
-      <formulate-form name="foundation" @submit="send('foundation')">
-        <formulate-input
-          type="text"
-          v-model="foundation.form.value"
-          label="BPI Foundation URL"
-          validation="required|regex_url"
-          :validation-rules="{regex_url: ({ value }) => regexURL(value)}"
-          :validation-messages="{regex_url: 'The link format is invalid'}"
-        />
-        <formulate-input label="Update" type="submit" :disabled="foundation.clicked">
-          <b-spinner v-if="foundation.clicked" variant="primary" small />
-        </formulate-input>
-      </formulate-form>
     </b-card>
 
     <!-- ALUMNI SECTION -->
@@ -664,7 +650,6 @@ export default Vue.extend({
                 }
             ),
             section: [],
-            foundation: { form: { value: '' }, clicked: false },
             modalType: '',
             modalEdit,
             modalShow: {},
@@ -679,7 +664,6 @@ export default Vue.extend({
             this.carousel.table.items = data.carousel
             this.carousel.table.busy = false
 
-            this.foundation.form.value = data.foundation
             this.about = data.about
             ;(this as any).about.clicked = false
             this.section = data.section
@@ -721,9 +705,9 @@ export default Vue.extend({
         },
         async send(type: string, isUpdate: boolean = false) {
             const _this = this as any,
-                url: string = `/admin/homepage/${
-                    type + (type === 'foundation' ? '/1' : '')
-                }/${isUpdate ? 'update/' + _this.modalEdit.id : 'create'}`,
+                url: string = `/admin/homepage/${type}/${
+                    isUpdate ? 'update/' + _this.modalEdit.id : 'create'
+                }`,
                 f = isUpdate ? _this.modalEdit : _this[type].form,
                 form = new FormData()
 
@@ -753,8 +737,7 @@ export default Vue.extend({
                 .then(async (r) => {
                     await this.refreshTable(type)
 
-                    if (type !== 'section' && type !== 'foundation')
-                        _this.$formulate.reset(type)
+                    if (type !== 'section') _this.$formulate.reset(type)
 
                     this.videoLoad = 0
 
