@@ -9,7 +9,7 @@ declare module 'vue/types/vue' {
         sauce(path: string): string
         catchErr(e: any): void
         logForm(pair: FormData): void
-        toast(txt: string | VNode, obj?: { title?: string, variant?: string, toaster?: string }): void
+        toast(txt: string | VNode, obj?: { title?: string, variant?: string }): void
     }
 }
 
@@ -57,11 +57,11 @@ Vue.mixin({
         },
         toast(txt: string | VNode, obj = {
             title: 'Success',
-            variant: 'success',
-            toaster: 'b-toaster-bottom-center'
+            variant: 'success'
         }): void {
             this.$bvToast.toast(txt, {
                 ...obj,
+                toaster: 'b-toaster-bottom-center'
             })
         }
     }
