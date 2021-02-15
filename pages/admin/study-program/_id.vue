@@ -125,12 +125,12 @@ export default Vue.extend({
             await this.$axios
                 .post('/admin/study-program/update/' + t.data.id, form)
                 .then((r) => {
-                    t.toast(r.data.message)
+                    this.toast(r.data.message)
 
                     this.$router.push('/admin/study-program')
                 })
                 .catch((e) => {
-                    t.catchErr(e)
+                    this.catchErr(e)
                 })
 
             this.clicked = false

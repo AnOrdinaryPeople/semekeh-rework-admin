@@ -88,7 +88,7 @@ export default Vue.extend({
     methods: {
         show(type: string, key: any) {
             window.open(
-                (this as any).urlFE + '/information-media/agenda/' + key.slug,
+                this.urlFE + '/information-media/agenda/' + key.slug,
                 '_blank'
             )
         },
@@ -96,10 +96,8 @@ export default Vue.extend({
             this.$router.push('/admin/information-media/agenda/' + key.slug)
         },
         del(type: string, key: any) {
-            const t = this as any
-
-            t.modal = key
-            t.$bvModal.show('del')
+            this.modal = key
+            this.$bvModal.show('del')
         },
         async send() {
             const form = new FormData(),
@@ -122,7 +120,7 @@ export default Vue.extend({
             this.$axios
                 .post('/admin/media/agenda/create', form)
                 .then((r) => {
-                    t.toast(r.data.message)
+                    this.toast(r.data.message)
 
                     if (
                         this.access['agenda.update'] ||
@@ -134,7 +132,7 @@ export default Vue.extend({
                     else t.$formulate.reset('agenda')
                 })
                 .catch((e) => {
-                    t.catchErr(e)
+                    this.catchErr(e)
                     this.clicked = false
                 })
         },
@@ -147,10 +145,10 @@ export default Vue.extend({
                     this.table.items = this.table.items.filter(
                         (i: any) => i.id !== id
                     )
-                    ;(this as any).toast(r.data.message)
+                    this.toast(r.data.message)
                 })
                 .catch((e) => {
-                    ;(this as any).catchErr(e)
+                    this.catchErr(e)
                 })
 
             this.clicked = false

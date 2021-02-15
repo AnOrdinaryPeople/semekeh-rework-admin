@@ -700,7 +700,7 @@ export default Vue.extend({
 
             this.setModal(type, key, modal)
             this.modalType = type
-            ;(this as any).$bvModal.show('homepage-modal-' + modal)
+            this.$bvModal.show('homepage-modal-' + modal)
         },
         del(type: string, key: any) {
             this.edit(type, key, 'del')
@@ -752,32 +752,34 @@ export default Vue.extend({
 
                     this.videoLoad = 0
 
-                    if (isUpdate) _this.$bvModal.hide('homepage-modal-edit')
+                    if (isUpdate) this.$bvModal.hide('homepage-modal-edit')
 
-                    _this.toast(r.data.message)
+                    this.toast(r.data.message)
                 })
                 .catch((e) => {
-                    _this.catchErr(e)
+                    this.catchErr(e)
                 })
 
             _this[type].clicked = false
             this.modalEditBtn = false
         },
         async destroy(type: string) {
-            const _this = this as any
-
             this.modalDelBtn = true
 
             await this.$axios
-                .delete(`/admin/homepage/${type}/delete/${_this.modalEdit.id}`)
+                .delete(
+                    `/admin/homepage/${type}/delete/${
+                        (this as any).modalEdit.id
+                    }`
+                )
                 .then(async (r) => {
                     await this.refreshTable(type)
-                    _this.$bvModal.hide('homepage-modal-del')
+                    this.$bvModal.hide('homepage-modal-del')
 
-                    _this.toast(r.data.message)
+                    this.toast(r.data.message)
                 })
                 .catch((e) => {
-                    _this.catchErr(e)
+                    this.catchErr(e)
                 })
 
             this.modalDelBtn = false
@@ -805,10 +807,10 @@ export default Vue.extend({
                     _this.about = r.data.result
                     _this.about.clicked = false
 
-                    _this.toast(r.data.message)
+                    this.toast(r.data.message)
                 })
                 .catch((e) => {
-                    _this.catchErr(e)
+                    this.catchErr(e)
                 })
 
             _this.about.clicked = false
@@ -840,9 +842,9 @@ export default Vue.extend({
                 .post(`/admin/homepage/${type}/publish/${id}`)
                 .then((r) => {
                     this.refreshTable(type)
-                    ;(this as any).toast(r.data.message)
+                    this.toast(r.data.message)
                 })
-                .catch((e) => (this as any).catchErr(e))
+                .catch((e) => this.catchErr(e))
         },
         cardTitle(key: number, origin: string) {
             let str = ''

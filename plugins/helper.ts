@@ -1,4 +1,17 @@
-import Vue from 'vue'
+import Vue, { VNode } from 'vue'
+
+declare module 'vue/types/vue' {
+    interface Vue {
+        appName: string,
+        appURL: string,
+        urlFE: string,
+        isDev: boolean,
+        sauce(path: string): string
+        catchErr(e: any): void
+        logForm(pair: FormData): void
+        toast(txt: string | VNode, obj?: { title?: string, variant?: string, toaster?: string }): void
+    }
+}
 
 Vue.mixin({
     data: () => ({
@@ -9,13 +22,12 @@ Vue.mixin({
     }),
     methods: {
         sauce(path: string): string {
-            return (this as any).appURL + '/' + path
+            return this.appURL + '/' + path
         },
-        catchErr(e) {
-            const t = (this as any),
-                s = e.response?.status
+        catchErr(e: any): void {
+            const s = e.response?.status
 
-            if (t.isDev) {
+            if (this.isDev) {
                 console.log('--- Client side error ---', e)
                 console.log('--- Server side error ---', e.response ?? 'No error found')
             }
@@ -30,25 +42,26 @@ Vue.mixin({
                 else
                     Object.values(e.response.data).forEach((o: any) => txt.push(h('p', o)))
 
-                t.toast(h('div', txt), {
+                this.toast(h('div', txt), {
                     title: 'Error',
                     variant: 'danger'
                 })
-            } else t.toast(`Internal Server Error ${t.isDev ? '(Check console)' : ''}`, {
+            } else this.toast(`Internal Server Error ${this.isDev ? '(Check console)' : ''}`, {
                 title: 'Server Error',
                 variant: 'danger'
             })
         },
-        logForm(form: any) {
+        logForm(form: any): void {
             for (var pair of form.entries())
                 console.log(pair[0], pair[1], typeof pair[1])
         },
-        toast(txt: any, obj: any) {
-            (this as any).$bvToast.toast(txt, {
+        toast(txt: string | VNode, obj = {
+            title: 'Success',
+            variant: 'success',
+            toaster: 'b-toaster-bottom-center'
+        }): void {
+            this.$bvToast.toast(txt, {
                 ...obj,
-                title: obj?.title ?? 'Success',
-                variant: obj?.variant ?? 'success',
-                toaster: obj?.toaster ?? 'b-toaster-bottom-center'
             })
         }
     }

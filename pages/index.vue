@@ -61,8 +61,6 @@ export default Vue.extend({
     }),
     methods: {
         async send() {
-            const _this = this as any
-
             this.clicked = true
 
             await this.$auth
@@ -78,9 +76,8 @@ export default Vue.extend({
                     this.$router.push('/admin')
                 })
                 .catch((e) => {
-                    _this.catchErr(e)
-
-                    _this.$refs.reeee.reset()
+                    this.catchErr(e)
+                    ;(this as any).$refs.reeee.reset()
                     this.clicked = false
                 })
         },

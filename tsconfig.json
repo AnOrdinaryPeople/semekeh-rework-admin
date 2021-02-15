@@ -27,7 +27,8 @@
       "@nuxt/types",
       "@types/node",
       "@nuxtjs/axios",
-      "@nuxtjs/auth-next"
+      "@nuxtjs/auth-next",
+      "bootstrap-vue"
     ]
   },
   "exclude": [

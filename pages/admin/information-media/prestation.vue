@@ -146,17 +146,17 @@ export default Vue.extend({
         },
         show(type: string, key: any) {
             this.modal = key
-            ;(this as any).$bvModal.show('show')
+            this.$bvModal.show('show')
         },
         edit(type: string, key: any) {
             this.modal = {}
 
             this.modal = { ...key, url: null }
-            ;(this as any).$bvModal.show('edit')
+            this.$bvModal.show('edit')
         },
         del(type: string, key: any) {
             this.modal = key
-            ;(this as any).$bvModal.show('del')
+            this.$bvModal.show('del')
         },
         async send(target = 'create') {
             const form = new FormData(),
@@ -171,8 +171,6 @@ export default Vue.extend({
                     form.append(i, f[i].fileList[0])
                 else if (f[i] !== null) form.append(i, f[i])
             })
-            console.log(f)
-            ;(this as any).logForm(form)
 
             await this.$axios
                 .post('/admin/media/prestation/' + target, form)
@@ -182,12 +180,12 @@ export default Vue.extend({
                     await this.refresh()
 
                     if (target === 'create') t.$formulate.reset('prestation')
-                    else t.$bvModal.hide('edit')
+                    else this.$bvModal.hide('edit')
 
-                    t.toast(r.data.message)
+                    this.toast(r.data.message)
                 })
                 .catch((e) => {
-                    ;(this as any).catchErr(e)
+                    this.catchErr(e)
                 })
 
             this.clicked = false
@@ -201,11 +199,11 @@ export default Vue.extend({
                     this.table.items = this.table.items.filter(
                         (i: any) => i.id !== id
                     )
-                    ;(this as any).$bvModal.hide('del')
-                    ;(this as any).toast(r.data.message)
+                    this.$bvModal.hide('del')
+                    this.toast(r.data.message)
                 })
                 .catch((e) => {
-                    ;(this as any).catchErr(e)
+                    this.catchErr(e)
                 })
 
             this.clicked = false

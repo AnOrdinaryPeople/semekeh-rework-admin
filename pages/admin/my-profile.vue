@@ -81,12 +81,10 @@ export default Vue.extend({
     }),
     methods: {
         async send() {
-            const _this = this as any
-
             this.clicked = true
 
             let obj: any = {
-                name: _this.$auth.user.name,
+                name: this.$auth.user?.name,
                 pass: this.passOld,
             }
 
@@ -98,10 +96,10 @@ export default Vue.extend({
             await this.$axios
                 .post('/api/auth/update', obj)
                 .then((r) => {
-                    _this.toast(r.data.message)
+                    this.toast(r.data.message)
                 })
                 .catch((e) => {
-                    _this.catchErr(e)
+                    this.catchErr(e)
                 })
 
             this.clicked = false

@@ -146,11 +146,11 @@ export default Vue.extend({
                                     }
                                 })
                                 .catch((e) => {
-                                    ;(this as any).catchErr(e)
+                                    this.catchErr(e)
                                 })
                     })
                     .catch((e) => {
-                        ;(this as any).catchErr(e)
+                        this.catchErr(e)
                     })
 
                 this.ready = true
@@ -162,10 +162,10 @@ export default Vue.extend({
             await this.$axios
                 .post('/admin/profile/update/' + this.id, this.content)
                 .then((r) => {
-                    ;(this as any).toast(r.data.message)
+                    this.toast(r.data.message)
                 })
                 .catch((e) => {
-                    ;(this as any).catchErr(e)
+                    this.catchErr(e)
                 })
 
             this.clicked.content = false
@@ -180,10 +180,10 @@ export default Vue.extend({
                         json: JSON.stringify(this.council.json),
                     })
                     .then((r) => {
-                        ;(this as any).toast(r.data.message)
+                        this.toast(r.data.message)
                     })
                     .catch((e) => {
-                        ;(this as any).catchErr(e)
+                        this.catchErr(e)
                     })
 
                 this.clicked.council = false
@@ -204,21 +204,19 @@ export default Vue.extend({
                     this.clicked.img = false
                     this.render()
 
-                    _this.toast(r.data.message)
+                    this.toast(r.data.message)
                 })
                 .catch((e) => {
-                    _this.catchErr(e)
+                    this.catchErr(e)
                 })
 
             this.clicked.img = false
         },
         del(type: string, key: any) {
             this.delId = key.id
-            ;(this as any).$bvModal.show('modal-del')
+            this.$bvModal.show('modal-del')
         },
         async delImg() {
-            const _this = this as any
-
             this.clicked.img = true
 
             await this.$axios
@@ -226,12 +224,12 @@ export default Vue.extend({
                 .then(async (r) => {
                     await this.render()
 
-                    _this.$bvModal.hide('modal-del')
+                    this.$bvModal.hide('modal-del')
 
-                    _this.toast(r.data.message)
+                    this.toast(r.data.message)
                 })
                 .catch((e) => {
-                    _this.catchErr(e)
+                    this.catchErr(e)
                 })
 
             this.clicked.img = false

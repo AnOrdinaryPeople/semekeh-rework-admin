@@ -143,18 +143,18 @@ export default Vue.extend({
             await this.$axios
                 .post('/admin/media/agenda/update/' + t.form.id, form)
                 .then((r) => {
-                    t.toast(r.data.message)
+                    this.toast(r.data.message)
                     this.$router.push('/admin/information-media/agenda')
                 })
                 .catch((e) => {
-                    t.catchErr(e)
+                    this.catchErr(e)
                 })
 
             this.clicked.agenda = false
         },
         del(type: string, key: any) {
             this.delId = key.id
-            ;(this as any).$bvModal.show('modal-del')
+            this.$bvModal.show('modal-del')
         },
         async sendImg() {
             const f = new FormData(),
@@ -171,17 +171,15 @@ export default Vue.extend({
                     this.clicked.img = false
                     this.render()
 
-                    _this.toast(r.data.message)
+                    this.toast(r.data.message)
                 })
                 .catch((e) => {
-                    _this.catchErr(e)
+                    this.catchErr(e)
                 })
 
             this.clicked.img = false
         },
         async delImg() {
-            const _this = this as any
-
             this.clicked.img = true
 
             await this.$axios
@@ -189,12 +187,12 @@ export default Vue.extend({
                 .then(async (r) => {
                     await this.render()
 
-                    _this.$bvModal.hide('modal-del')
+                    this.$bvModal.hide('modal-del')
 
-                    _this.toast(r.data.message)
+                    this.toast(r.data.message)
                 })
                 .catch((e) => {
-                    _this.catchErr(e)
+                    this.catchErr(e)
                 })
 
             this.clicked.img = false
