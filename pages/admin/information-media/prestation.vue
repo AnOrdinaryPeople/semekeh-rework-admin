@@ -166,7 +166,7 @@ export default Vue.extend({
             this.clicked = true
 
             Object.keys(f).forEach((i: any) => {
-                let val: any
+                // let val: any
 
                 if (typeof f[i] === 'object' && f[i] !== null)
                     form.append(i, f[i].fileList[0])

@@ -138,7 +138,8 @@ export default Vue.extend({
         modal: {},
     }),
     async fetch() {
-        await this.render()
+        if (this.access['gallery.show']) await this.render()
+        else this.$router.push('/404')
     },
     methods: {
         async render(bool = true) {

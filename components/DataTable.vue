@@ -14,7 +14,7 @@
     </b-row>
 
     <b-table
-      :id="'table-' + type"
+      :id="'table-' + type + (delEmp ? empKey : '')"
       responsive
       striped
       show-empty
@@ -148,6 +148,7 @@ export default Vue.extend({
         del: Function,
         dell: Function,
         delEmp: Function,
+        empKey: Number,
         type: {
             required: true,
             type: String,
@@ -176,7 +177,11 @@ export default Vue.extend({
         },
         toTable() {
             document
-                .getElementById('parent-card-' + this.type)
+                .getElementById(
+                    this.delEmp
+                        ? 'table-' + this.type + this.empKey
+                        : 'parent-card-' + this.type
+                )
                 ?.scrollIntoView({ behavior: 'smooth' })
         },
     },
