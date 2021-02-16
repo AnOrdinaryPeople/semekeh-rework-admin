@@ -3,10 +3,12 @@
     <div v-for="(i, k) in menu" :key="k" class="list-style-none">
       <li v-if="i.children && checkChildPerm(i.children)" class="nav-item">
         <a class="nav-link" href="#" v-b-toggle="'app-sidebar-' + k" @click.prevent>
-          {{ i.name }}
-          <span class="float-right side-icon" :class="toggle[k] ? 'rotate-180' : ''">
-            <fa icon="chevron-down" />
-          </span>
+          <icon-txt :icon="i.icon">
+            {{ i.name }}
+            <span class="float-right side-icon" :class="toggle[k] ? 'rotate-180' : ''">
+              <fa icon="chevron-down" />
+            </span>
+          </icon-txt>
         </a>
 
         <b-collapse :id="'app-sidebar-' + k" v-model="toggle[k]">
@@ -16,17 +18,17 @@
               :key="kk"
               :class="checkPerm(j.name) ? 'nav-item' : 'd-none'"
             >
-              <nuxt-link
-                v-if="checkPerm(j.name)"
-                class="nav-link"
-                :to="'/admin' + i.link + j.link"
-              >{{ j.name }}</nuxt-link>
+              <nuxt-link v-if="checkPerm(j.name)" class="nav-link" :to="'/admin' + i.link + j.link">
+                <icon-txt :icon="j.icon">{{ j.name }}</icon-txt>
+              </nuxt-link>
             </li>
           </ul>
         </b-collapse>
       </li>
       <li v-else-if="checkPerm(i.name)" class="nav-item">
-        <nuxt-link class="nav-link" :to="'/admin' + i.link">{{ i.name }}</nuxt-link>
+        <nuxt-link class="nav-link" :to="'/admin' + i.link">
+          <icon-txt :icon="i.icon">{{ i.name }}</icon-txt>
+        </nuxt-link>
       </li>
     </div>
   </div>
@@ -39,38 +41,61 @@ import { mapGetters } from 'vuex'
 export default Vue.extend({
     data: () => {
         const menu = [
-            { name: 'Homepage', link: '' },
+            { name: 'Homepage', link: '', icon: 'home' },
             {
                 name: 'Profile',
                 link: '/profile',
+                icon: 'school',
                 children: [
-                    { name: 'Public Profile', link: '/public-profile' },
-                    { name: 'Vision Mission', link: '/vision-mission' },
-                    { name: 'Student Council', link: '/student-council' },
-                    { name: 'Extracurricular', link: '/extracurricular' },
+                    {
+                        name: 'Public Profile',
+                        link: '/public-profile',
+                        icon: 'university',
+                    },
+                    {
+                        name: 'Vision Mission',
+                        link: '/vision-mission',
+                        icon: 'tasks',
+                    },
+                    {
+                        name: 'Student Council',
+                        link: '/student-council',
+                        icon: 'user-graduate',
+                    },
+                    {
+                        name: 'Extracurricular',
+                        link: '/extracurricular',
+                        icon: 'dice',
+                    },
                 ],
             },
-            { name: 'Study Program', link: '/study-program' },
+            {
+                name: 'Study Program',
+                link: '/study-program',
+                icon: 'graduation-cap',
+            },
             {
                 name: 'Information Media',
                 link: '/information-media',
+                icon: 'compact-disc',
                 children: [
-                    { name: 'Agenda', link: '/agenda' },
-                    { name: 'Prestation', link: '/prestation' },
-                    { name: 'Gallery', link: '/gallery' },
+                    { name: 'Agenda', link: '/agenda', icon: 'calendar-week' },
+                    { name: 'Prestation', link: '/prestation', icon: 'medal' },
+                    { name: 'Gallery', link: '/gallery', icon: 'photo-video' },
                 ],
             },
-            { name: 'Employees', link: '/employees' },
+            { name: 'Employees', link: '/employees', icon: 'portrait' },
             {
                 name: 'User Management',
                 link: '/user-management',
+                icon: 'users-cog',
                 children: [
-                    { name: 'Users', link: '/users' },
-                    { name: 'Role', link: '/role' },
+                    { name: 'Users', link: '/users', icon: 'users' },
+                    { name: 'Role', link: '/role', icon: 'tags' },
                 ],
             },
-            { name: 'Settings', link: '/settings' },
-            { name: 'Audits', link: '/audits' },
+            { name: 'Settings', link: '/settings', icon: 'cog' },
+            { name: 'Audits', link: '/audits', icon: 'clipboard-list' },
         ]
 
         return {
