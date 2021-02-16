@@ -38,6 +38,7 @@
               accept="image/jpg, image/jpeg, image/png, image/webp"
             />
             <b-img fluid :src="sauce('storage/' + view.url)" />
+            <small class="text-muted font-italic">Current image</small>
           </b-col>
         </b-row>
 

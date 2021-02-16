@@ -22,7 +22,7 @@
         <strong>delete</strong> this data? This action
         <strong>cannot</strong> be undone
       </p>
-      <b-btn class="btn btn-danger" :disabled="clicked.img" @click="destroy()">Yes</b-btn>
+      <b-btn class="btn btn-danger" :disabled="clicked" @click="destroy()">Yes</b-btn>
       <a href="#" class="btn btn-secondary" @click.prevent="$bvModal.hide('del')">No</a>
     </b-modal>
   </div>
@@ -76,6 +76,8 @@ export default Vue.extend({
                 .catch((e) => {
                     this.catchErr(e)
                 })
+
+            this.clicked = false
         },
     },
     computed: {

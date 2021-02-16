@@ -51,7 +51,7 @@
         <strong>delete</strong> this data? This action
         <strong>cannot</strong> be undone
       </p>
-      <b-btn class="btn btn-danger" :disabled="clicked.img" @click="destroy(modalType)">Yes</b-btn>
+      <b-btn class="btn btn-danger" :disabled="clicked" @click="destroy()">Yes</b-btn>
       <a href="#" class="btn btn-secondary" @click.prevent="$bvModal.hide('del')">No</a>
     </b-modal>
   </card>
@@ -136,14 +136,14 @@ export default Vue.extend({
                     this.clicked = false
                 })
         },
-        async destroy(id: string) {
+        async destroy() {
             this.clicked = true
 
             await this.$axios
-                .delete('/admin/media/agenda/delete/' + id)
+                .delete('/admin/media/agenda/delete/' + (this as any).modal.id)
                 .then((r) => {
                     this.table.items = this.table.items.filter(
-                        (i: any) => i.id !== id
+                        (i: any) => i.id !== (this as any).modal.id
                     )
                     this.toast(r.data.message)
                 })
