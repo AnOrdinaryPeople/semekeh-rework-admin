@@ -30,13 +30,10 @@
       >Cache the database {{ timer ? 'for ' + timerr : '' }}</b-btn>
       <b-row class="text-muted">
         <b-col cols="6">
-          <small class="font-italic">Create cache database for better performance</small>
+          <small>Cache expiration based on recent cache</small>
         </b-col>
         <b-col class="text-right" cols="6">
-          <small
-            v-if="latest"
-            class="text-muted"
-          >Cached by {{ latest.name }} at {{ latest.created_at }}</small>
+          <small v-if="latest">Latest cache by {{ latest.name }} at {{ latest.created_at }}</small>
         </b-col>
       </b-row>
     </div>
@@ -66,6 +63,8 @@ export default Vue.extend({
         table: {
             fields: [
                 { key: 'name', sortable: true },
+                { key: 'duration', sortable: true },
+                { key: 'expire', sortable: true },
                 { key: 'created_at', sortable: true },
             ],
             items: [],

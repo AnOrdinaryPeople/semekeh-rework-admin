@@ -45,6 +45,11 @@
           </b-col>
         </b-row>
       </template>
+      <template #cell(expire)="data">
+        <strong
+          :class="`text-${data.item.key === 0 ? Date.parse(data.item.expire) <= Date.parse() ? 'danger' : 'success' : 'muted'}`"
+        >{{ data.item.expire }}</strong>
+      </template>
       <template v-if="checkAccess" #cell(action)="data">
         <a
           v-if="access[`${type}.show`] && show"
