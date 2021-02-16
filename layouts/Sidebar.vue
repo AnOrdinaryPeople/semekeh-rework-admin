@@ -1,6 +1,6 @@
 <template>
   <div v-if="Object.keys(access).length > 0">
-    <div v-for="(i, k) in menu" :key="k" class="list-style-none">
+    <div v-for="(i, k) in menu" :key="k" class="list-style-none m-0-10">
       <li v-if="i.children && checkChildPerm(i.children)" class="nav-item">
         <a class="nav-link" href="#" v-b-toggle="'app-sidebar-' + k" @click.prevent>
           <icon-txt :icon="i.icon">

@@ -32,17 +32,21 @@
 .list-style-none > .nav-item > .nuxt-link-exact-active{
     background-color: #022c43;
     color: #f8fafc;
-    margin: 10px;
+    /* margin: 10px; */
     border-radius: .25rem;
+}
+
+.m-0-10{
+    margin: 0 10px;
 }
 
 .navbar-nav > .nav-item > .nuxt-link-exact-active{
     color: #fff !important;
 }
 
-.nav-link .nuxt-link-exact-active{
+/* .nav-link .nuxt-link-exact-active{
     padding: .5rem 0
-}
+} */
 
 .form-control:disabled{
     background-color: #e9ecef !important;
