@@ -2,7 +2,13 @@
   <div v-if="Object.keys(access).length > 0">
     <div v-for="(i, k) in menu" :key="k" class="list-style-none m-0-10">
       <li v-if="i.children && checkChildPerm(i.children)" class="nav-item">
-        <a class="nav-link" href="#" v-b-toggle="'app-sidebar-' + k" @click.prevent>
+        <a
+          class="nav-link"
+          :class="activeNav(i.link.split('/')[1])"
+          href="#"
+          v-b-toggle="'app-sidebar-' + k"
+          @click.prevent
+        >
           <icon-txt :icon="i.icon">
             {{ i.name }}
             <span class="float-right side-icon" :class="toggle[k] ? 'rotate-180' : ''">
@@ -11,7 +17,7 @@
           </icon-txt>
         </a>
 
-        <b-collapse :id="'app-sidebar-' + k" v-model="toggle[k]">
+        <b-collapse :id="'app-sidebar-' + k" class="pt-2" v-model="toggle[k]">
           <ul class="list-style-none">
             <li
               v-for="(j, kk) in i.children"
@@ -106,6 +112,19 @@ export default Vue.extend({
     methods: {
         toKebab(str: string): string {
             return str.replace(/\s+/g, '-').toLowerCase()
+        },
+        activeNav(str: string): string {
+            const path = this.$route.fullPath.split('/')
+
+            console.log(
+                path,
+                path.filter((i) => i.match(new RegExp(str, 'g')))
+            )
+
+            if (path.filter((i) => i.match(new RegExp(str, 'g'))).length > 0)
+                return 'custom-link-active'
+
+            return ''
         },
         checkPerm(str: string): boolean {
             const a = Object.keys(this.access).filter((f: any) =>

@@ -29,7 +29,8 @@
     max-width: none !important;
 }
 
-.list-style-none > .nav-item > .nuxt-link-exact-active{
+.list-style-none > .nav-item > .nuxt-link-exact-active,
+.list-style-none > .nav-item > .custom-link-active{
     background-color: #022c43;
     color: #f8fafc;
     /* margin: 10px; */
