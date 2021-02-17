@@ -6,13 +6,14 @@
           type="image"
           label="Banner"
           v-model="form.banner"
-          validation="required|mime:image/jpg,image/jpeg,image/png,image/webp"
           accept="image/jpg, image/jpeg, image/png, image/webp"
         />
 
         <b-row class="mb-2">
           <b-col class="mx-auto" cols="6">
-            <b-img fluid :src="sauce(banner)" />
+            <div>
+              <b-img fluid :src="sauce(banner)" />
+            </div>
             <small class="text-muted font-italic">Current banner</small>
           </b-col>
         </b-row>

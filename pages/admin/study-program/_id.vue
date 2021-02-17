@@ -13,7 +13,9 @@
               v-model="data.banner"
               accept="image/jpg, image/jpeg, image/png, image/webp"
             />
-            <b-img fluid :src="sauce('storage/' + view.banner)" />
+            <div>
+              <b-img fluid :src="sauce('storage/' + view.banner)" />
+            </div>
             <small class="text-muted font-italic">Current banner</small>
           </b-col>
         </b-row>

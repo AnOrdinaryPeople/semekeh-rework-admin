@@ -3,7 +3,8 @@ import { GetterTree, ActionTree, MutationTree } from 'vuex'
 export const state = () => ({
     access: {},
     role: '',
-    study: {}
+    study: {},
+    news: {}
 })
 
 export type RootState = ReturnType<typeof state>
@@ -11,7 +12,8 @@ export type RootState = ReturnType<typeof state>
 export const getters: GetterTree<RootState, RootState> = {
     access: s => s.access,
     role: s => s.role,
-    study: s => s.study
+    study: s => s.study,
+    news: s => s.news
 }
 
 export const actions: ActionTree<RootState, RootState> = {
@@ -35,11 +37,15 @@ export const actions: ActionTree<RootState, RootState> = {
     },
     setStudy({ commit }, data) {
         commit('SET_STUDY', data)
+    },
+    setNews({ commit }, data) {
+        commit('SET_NEWS', data)
     }
 }
 
 export const mutations: MutationTree<RootState> = {
     SET_ACCESS: (s, data: any) => s.access = data,
     SET_ROLE: (s, data: string) => s.role = data,
-    SET_STUDY: (s, data) => s.study = data
+    SET_STUDY: (s, data) => s.study = data,
+    SET_NEWS: (s, data) => s.news = data
 }

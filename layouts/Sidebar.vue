@@ -22,9 +22,14 @@
             <li
               v-for="(j, kk) in i.children"
               :key="kk"
-              :class="checkPerm(j.name) ? 'nav-item' : 'd-none'"
+              :class="checkPerm(j.name) ? 'nav-item ' : 'd-none '"
             >
-              <nuxt-link v-if="checkPerm(j.name)" class="nav-link" :to="'/admin' + i.link + j.link">
+              <nuxt-link
+                v-if="checkPerm(j.name)"
+                class="nav-link"
+                :class="activeNav(j.link.split('/')[1])"
+                :to="'/admin' + i.link + j.link"
+              >
                 <icon-txt :icon="j.icon">{{ j.name }}</icon-txt>
               </nuxt-link>
             </li>
@@ -32,7 +37,11 @@
         </b-collapse>
       </li>
       <li v-else-if="checkPerm(i.name)" class="nav-item">
-        <nuxt-link class="nav-link" :to="'/admin' + i.link">
+        <nuxt-link
+          class="nav-link"
+          :class="activeNav(i.link.split('/')[1])"
+          :to="'/admin' + i.link"
+        >
           <icon-txt :icon="i.icon">{{ i.name }}</icon-txt>
         </nuxt-link>
       </li>
@@ -86,6 +95,7 @@ export default Vue.extend({
                 icon: 'compact-disc',
                 children: [
                     { name: 'Agenda', link: '/agenda', icon: 'calendar-week' },
+                    { name: 'News', link: '/news', icon: 'newspaper' },
                     { name: 'Prestation', link: '/prestation', icon: 'medal' },
                     { name: 'Gallery', link: '/gallery', icon: 'photo-video' },
                 ],
@@ -116,12 +126,10 @@ export default Vue.extend({
         activeNav(str: string): string {
             const path = this.$route.fullPath.split('/')
 
-            console.log(
-                path,
-                path.filter((i) => i.match(new RegExp(str, 'g')))
+            if (
+                str &&
+                path.filter((i) => i.match(new RegExp(str, 'g'))).length > 0
             )
-
-            if (path.filter((i) => i.match(new RegExp(str, 'g'))).length > 0)
                 return 'custom-link-active'
 
             return ''
