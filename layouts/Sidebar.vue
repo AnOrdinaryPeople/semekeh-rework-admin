@@ -139,9 +139,11 @@ export default Vue.extend({
                 f.includes(this.toKebab(str))
             )
 
-            return a.length
+            return str === 'Homepage'
+                ? true
+                : a.length
                 ? (this.access[a[0]] === 1 || this.access[a[0]] === true) ??
-                      false
+                  false
                 : false
         },
         checkChildPerm(arr: any): boolean {
