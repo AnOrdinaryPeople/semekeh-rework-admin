@@ -12,7 +12,7 @@
         </b-col>
       </b-row>
 
-      <formulate-input type="text" label="Name" v-model="auth.name" validation="required" />
+      <formulate-input type="text" label="Name" v-model="name" validation="required" />
 
       <b-row class="mb-2">
         <b-col cols="6">
@@ -78,13 +78,17 @@ export default Vue.extend({
         view: false,
         vieww: false,
         clicked: false,
+        name: '',
     }),
+    mounted() {
+        this.name = JSON.parse(JSON.stringify(this.auth.name))
+    },
     methods: {
         async send() {
             this.clicked = true
 
             let obj: any = {
-                name: this.$auth.user?.name,
+                name: this.name,
                 pass: this.passOld,
             }
 
@@ -95,7 +99,9 @@ export default Vue.extend({
 
             await this.$axios
                 .post('/api/auth/update', obj)
-                .then((r) => {
+                .then(async (r) => {
+                    await this.$auth.fetchUser()
+
                     this.toast(r.data.message)
                 })
                 .catch((e) => {
@@ -107,7 +113,7 @@ export default Vue.extend({
     },
     computed: {
         ...mapGetters(['role']),
-        auth() {
+        auth(): any {
             const u = this.$auth.user
 
             return {
