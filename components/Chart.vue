@@ -25,6 +25,8 @@ export default Vue.extend({
     },
     methods: {
         oc(dom: any, obj: object) {
+            let config = JSON.parse(JSON.stringify(this.config))
+
             OrgChart.templates.rony = Object.assign(
                 {},
                 {
@@ -48,14 +50,13 @@ export default Vue.extend({
                         '<path stroke="#022c43" stroke-width="1px" fill="none" link-id="[{id}][{child-id}]" d="M{xa},{ya} {xb},{yb} {xc},{yc} L{xd},{yd}"></path>',
                 }
             )
-            this.config.template = 'rony'
-            this.config.nodes = obj
+            config.template = 'rony'
+            config.nodes = obj
 
             if (this.edit) {
-                this.config.nodeMouseClick = (OrgChart as any).action.edit
-            }
-
-            ;(this as any).chart = new OrgChart(dom, this.config)
+                config.nodeMouseClick = (OrgChart as any).action.edit
+            } else delete config.nodeMenu
+            ;(this as any).chart = new OrgChart(dom, config)
         },
     },
 })

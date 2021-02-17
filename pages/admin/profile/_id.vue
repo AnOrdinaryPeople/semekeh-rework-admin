@@ -1,7 +1,7 @@
 <template>
   <div v-if="ready">
-    <card :access-name="acc" access-target="update" :title="content.title">
-      <formulate-form name="content" @submit="send()">
+    <card :access-name="acc" :title="content.title">
+      <formulate-form v-if="access[acc + '.update']" name="content" @submit="send()">
         <b-row class="mb-2">
           <b-col cols="6">
             <formulate-input
@@ -32,6 +32,28 @@
           <b-spinner v-if="clicked.content" variant="primary" small />
         </formulate-input>
       </formulate-form>
+
+      <div v-if="!access[acc + '.update'] && access[acc + '.show']">
+        <div class="form-group">
+          <label>
+            <strong>Subtitle</strong>
+          </label>
+          <p
+            :class="!content.subtitle ? 'text-muted font-italic' : ''"
+          >{{ content.subtitle ? content.subtitle : 'Empty subtitle' }}</p>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <strong>Content</strong>
+          </label>
+          <markdown :content="content.content" />
+        </div>
+
+        <div v-if="id === 3 && access['student-council.show']" class="form-group">
+          <chart :obj="council.json" :config="config" :edit="false" />
+        </div>
+      </div>
     </card>
 
     <b-card v-if="id === 3 && access['student-council.update']">
