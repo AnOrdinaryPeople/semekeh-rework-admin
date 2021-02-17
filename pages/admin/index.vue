@@ -174,32 +174,18 @@
 
     <b-card class="my-4">
       <b-row class="mb-4">
-        <b-col cols="6">
+        <b-col v-for="(i, k) in miscSection" :key="k" cols="4">
           <b-card-title>
             <b-btn
               variant="info"
               title="Edit"
               v-b-tooltip.hover
               size="sm"
-              @click="edit('section', section[2])"
+              @click="edit('section', section[i[1]])"
             >
               <fa icon="pencil-alt" />
             </b-btn>
-            &nbsp;{{ cardTitle(2, 'News') }}
-          </b-card-title>
-        </b-col>
-        <b-col cols="6">
-          <b-card-title>
-            <b-btn
-              variant="info"
-              title="Edit"
-              v-b-tooltip.hover
-              size="sm"
-              @click="edit('section', section[3])"
-            >
-              <fa icon="pencil-alt" />
-            </b-btn>
-            &nbsp;{{ cardTitle(3, 'Prestation') }}
+            &nbsp;{{ cardTitle(i[1], i[0]) }}
           </b-card-title>
         </b-col>
       </b-row>
@@ -657,6 +643,11 @@ export default Vue.extend({
             modalDelBtn: false,
             aboutImg: null,
             videoLoad: 0,
+            miscSection: [
+                ['Agenda', 2],
+                ['News', 6],
+                ['Prestation', 3],
+            ],
         }
     },
     async fetch() {
