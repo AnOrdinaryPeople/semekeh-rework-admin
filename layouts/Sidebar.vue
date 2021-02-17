@@ -1,5 +1,5 @@
 <template>
-  <div v-if="Object.keys(access).length > 0">
+  <div v-if="access && Object.keys(access).length > 0">
     <div v-for="(i, k) in menu" :key="k" class="list-style-none m-0-10">
       <li v-if="i.children && checkChildPerm(i.children)" class="nav-item">
         <a
