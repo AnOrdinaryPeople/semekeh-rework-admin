@@ -10,7 +10,10 @@
     <b-collapse id="app-nav" is-nav>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <nuxt-link class="nav-link" to="/admin/my-profile">{{ $auth.user.name }}</nuxt-link>
+          <nuxt-link
+            class="nav-link"
+            to="/admin/my-profile"
+          >{{ $auth.user.name ? $auth.user.name : '' }}</nuxt-link>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#" v-b-toggle:app-sidebar @click.prevent>

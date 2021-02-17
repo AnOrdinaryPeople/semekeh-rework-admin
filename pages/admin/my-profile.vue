@@ -1,10 +1,10 @@
 <template>
-  <b-card :title="$auth.user.name">
+  <b-card v-if="auth.name" :title="auth.name">
     <formulate-form @submit="send()">
       <b-row>
         <b-col cols="6">
           <strong>Email</strong>
-          <p>{{ $auth.user.email }}</p>
+          <p>{{ auth.email }}</p>
         </b-col>
         <b-col cols="6">
           <strong>Role</strong>
@@ -12,7 +12,7 @@
         </b-col>
       </b-row>
 
-      <formulate-input type="text" label="Name" v-model="$auth.user.name" validation="required" />
+      <formulate-input type="text" label="Name" v-model="auth.name" validation="required" />
 
       <b-row class="mb-2">
         <b-col cols="6">
@@ -107,6 +107,14 @@ export default Vue.extend({
     },
     computed: {
         ...mapGetters(['role']),
+        auth() {
+            const u = this.$auth.user
+
+            return {
+                name: u?.name,
+                email: u?.email,
+            }
+        },
     },
 })
 </script>

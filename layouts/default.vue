@@ -40,10 +40,12 @@ export default Vue.extend({
         appSidebar: Sidebar,
     },
     methods: {
-        logout(hide: any) {
+        async logout(hide: any) {
             hide()
 
-            this.$auth.logout()
+            await this.$auth.logout().then(() => {
+                localStorage.removeItem('app')
+            })
         },
     },
     created() {
