@@ -64,3 +64,8 @@
     border-left: 3px solid var(--bpi-yellow);
     padding-left: .75rem;
 }
+
+.formulate-input[data-classification='select'] select:focus,
+.formulate-input[data-classification='text'] input:focus{
+    border-color: #067dbf !important
+}

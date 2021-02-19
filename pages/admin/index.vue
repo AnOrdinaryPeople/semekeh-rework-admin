@@ -123,7 +123,7 @@
     <!-- ABOUT SECTION -->
 
     <card access-name="homepage-about">
-      <div v-if="access['homepage-about.update'] && about.content">
+      <div v-if="access['homepage-about.update'] && Object.keys(about).length > 0">
         <b-card-title>
           <b-btn
             variant="info"
