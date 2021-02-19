@@ -21,7 +21,7 @@
     </div>
 
     <div v-if="access['settings.update']" class="my-5">
-      <label>Cache database</label>
+      <label>Cache database manually</label>
       <b-form-select class="mb-2" v-model="timer" :options="timerList" />
       <b-btn
         block
@@ -40,6 +40,7 @@
 
     <h3>Cache History</h3>
     <data-table type="settings" :table="table" />
+    <small class="text-muted">Auto cache will be refresh and delete the history monthly</small>
 
     <b-overlay no-wrap :show="clickedd" spinner-variant="info" />
   </card>
