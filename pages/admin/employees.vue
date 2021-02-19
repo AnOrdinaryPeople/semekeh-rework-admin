@@ -264,6 +264,8 @@ export default Vue.extend({
                 .catch((e) => {
                     this.catchErr(e)
                 })
+
+            this.clicked = false
         },
         async destroy() {
             this.clicked = true
